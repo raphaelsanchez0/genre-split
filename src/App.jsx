@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 
-import './App.css'
+import './App.scss'
+import Header from './Header.jsx'
 
 function App() {
   const [token, setToken] = useState("")
 
-  const [searchKey, setSearchKey] = useState("")
   const [topArtists, setTopArtists] = useState([])
 
 
@@ -47,42 +47,38 @@ function App() {
         });
         setTopArtists(response.data.items)
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     };
     getTopArtists();
-  }, [])
+  }, [token ])
 
   const logout = () => {
     setToken("")
     window.localStorage.removeItem("token")
   }
 
-  const renderArtists = () => {
-    return artists.map(artist => (
-      <div key={artist.id}>
-        {artist.images.length ? <img width={"100%"} src={artist.images[0].url} alt="" /> : <div>No Image</div>}
-        {artist.name}
-      </div>
-    ))
-  }
-
+  
   function handleTopArtists() {
     console.log(topArtists)
+  }
+
+  function authorizationFlow(){
+    return 
   }
 
 
 
   return (
     <div className='App'>
-      <header>
+      <Header/>
 
         {!token ?
           <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`}>Login
             to Spotify</a>
           : <button onClick={logout}>Logout</button>}
-        <button onClick={handleTopArtists}>Get Top Artists</button>
-      </header>
+        
+      
 
 
 
