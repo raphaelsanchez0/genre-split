@@ -1,0 +1,18 @@
+* {
+    font-family: Inter, sans-serif;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+.header{
+    width: 100vw;
+    background: #192524;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 7.5vh;
+    h1{
+        color: #ace176;
+    }
+}
