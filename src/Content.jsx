@@ -29,6 +29,7 @@ export default function Content(){
     
     
       useEffect(() => {
+        if(token){
         const getTopArtists = async () => {
           try {
             const response = await axios.get('https://api.spotify.com/v1/me/top/artists', {
@@ -42,6 +43,7 @@ export default function Content(){
           }
         };
         getTopArtists();
+    }
       }, [token ])
     
       const logout = () => {
@@ -57,15 +59,16 @@ export default function Content(){
     
     
       return (
-        <div className='App'>
-          <Header/>
+        <div className='content'>
+          
     
             {!token ?
-              <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`}>Login
+              <a className="login" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`}>Login
                 to Spotify</a>
-              : <button onClick={logout}>Logout</button>}
-            
-          
+              : <button onClick={logout} className="login">Logout</button>}
+
+            <button onClick={handleTopArtists}>Get Artists</button>
+        
     
     
     
