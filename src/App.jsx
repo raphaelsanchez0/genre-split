@@ -4,8 +4,12 @@ import { useState } from 'react'
 
 import { useRecoilState } from 'recoil'
 import { topArtistsState } from './topArtistsState'
+import Content from './Content'
+  
 
-function App() {
+
+
+export default function App() {
 
   const [topArtists, setTopArtists] = useRecoilState(topArtistsState)
   function handleTopArtists() {
@@ -17,6 +21,7 @@ function App() {
       <Navbar />
 
       <button onClick={handleTopArtists}></button>
+      <Content/>
 
 
 
@@ -24,5 +29,3 @@ function App() {
     </div>
   )
 }
-
-export default App

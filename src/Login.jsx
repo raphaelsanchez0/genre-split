@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useRecoilState } from 'recoil'
 import { topArtistsState } from './topArtistsState'
+import { getTopArtists } from './api'
 
 
 export default function Login() {
   const [token, setToken] = useState("")
-  const [topArtists, setTopArtists] = useRecoilState(topArtistsState)
+  const [topArtists, setTopArtists] = useRecoilState(topArtistsState);
+  const [counter, setCounter] = useState(0)
 
   const CLIENT_ID = "420d2cfc497641c4965d36181d8c04a9"
   const REDIRECT_URI = "http://localhost:5173"
@@ -32,23 +34,29 @@ export default function Login() {
 
 
   useEffect(() => {
-    if (token) {
-      const getTopArtists = async () => {
-        try {
-          const response = await axios.get('https://api.spotify.com/v1/me/top/artists', {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          });
-          setTopArtists(response.data.items)
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      getTopArtists();
-    }
-  }, [token])
+    
+      
 
+      
+      // Use a Promise to wait for the token to exist
+    const getTokenPromise = new Promise(resolve => {
+      if (token) {
+        resolve();
+      }
+    });
+
+    // Only make the API request once the token exists
+    getTokenPromise.then(() => {
+      if (topArtists.length === 0) {
+        setTopArtists(getTopArtists(token))
+      }
+    });
+
+
+      
+      
+    
+  },[token, topArtists, setTopArtists])
 
 
 

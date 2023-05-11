@@ -1,8 +1,12 @@
+$base-color: #ace176;
+
+
 * {
     font-family: Inter, sans-serif;
     margin: 0;
     box-sizing: border-box;
 }
+
 
 
 nav {
@@ -14,7 +18,7 @@ nav {
     padding: 30px 25px;
 
     h1 {
-        color: #ace176;
+        color: $base-color; 
         margin-right: auto;
 
     }
@@ -22,13 +26,13 @@ nav {
     .login {
 
         margin: 0;
+        border: none;
+        color:white ;
+        background:$base-color;
+        font-weight: bold;
+        padding: 5px;
     }
 
 
 }
 
-.content {
-    .login {
-        justify: right;
-    }
-}
