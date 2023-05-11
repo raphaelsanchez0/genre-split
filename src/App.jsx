@@ -1,18 +1,23 @@
-
-
-
 import './App.scss'
-import Header from './Header.jsx'
-import Content from './Content.jsx'
+import Navbar from './Navbar.jsx'
+import { useState } from 'react'
+
+import { useRecoilState } from 'recoil'
+import { topArtistsState } from './topArtistsState'
 
 function App() {
-  
+
+  const [topArtists, setTopArtists] = useRecoilState(topArtistsState)
+  function handleTopArtists() {
+    console.log(topArtists)
+  }
 
   return (
     <div className='App'>
-      <Header/>
-      <Content/>
-      
+      <Navbar />
+
+      <button onClick={handleTopArtists}></button>
+
 
 
 
