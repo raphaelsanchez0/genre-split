@@ -18,7 +18,7 @@ nav {
     padding: 30px 25px;
 
     h1 {
-        color: $base-color; 
+        color: $base-color;
         margin-right: auto;
 
     }
@@ -27,8 +27,8 @@ nav {
 
         margin: 0;
         border: none;
-        color:white ;
-        background:$base-color;
+        color: white;
+        background: $base-color;
         font-weight: bold;
         padding: 5px;
     }
@@ -36,3 +36,17 @@ nav {
 
 }
 
+.App {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    align-self: center;
+    background: rgb(210, 210, 210);
+
+    .header {
+        display: flex;
+        flex-direction: row;
+    }
+}

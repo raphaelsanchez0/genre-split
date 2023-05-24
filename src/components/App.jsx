@@ -1,11 +1,11 @@
-import './App.scss'
+import '../assets/App.scss'
 import Navbar from './Navbar.jsx'
 import { useState } from 'react'
 
 import { useRecoilState } from 'recoil'
-import { topArtistsState } from './topArtistsState'
+import { topArtistsState } from '../assets/atoms'
 import Content from './Content'
-  
+
 
 
 
@@ -21,7 +21,7 @@ export default function App() {
       <Navbar />
 
       <button onClick={handleTopArtists}></button>
-      <Content/>
+      <Content />
 
 
 

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useRecoilState } from 'recoil'
-import { topArtistsState } from './topArtistsState'
-import { getTopArtists } from './api'
+import { topArtistsState } from '../assets/atoms'
+import { getTopItems, getLikedTracks } from '../assets/api'
 
 
 export default function Login() {
@@ -14,7 +14,7 @@ export default function Login() {
   const REDIRECT_URI = "http://localhost:5173"
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "token"
-  const SCOPE = 'user-top-read'
+  const SCOPE = 'user-library-read'
 
   //checks for token in local storage and sets token's state to that token if so
   useEffect(() => {
@@ -34,11 +34,11 @@ export default function Login() {
 
 
   useEffect(() => {
-    
-      
 
-      
-      // Use a Promise to wait for the token to exist
+
+
+
+    // Use a Promise to wait for the token to exist
     const getTokenPromise = new Promise(resolve => {
       if (token) {
         resolve();
@@ -46,19 +46,21 @@ export default function Login() {
     });
 
     // Only make the API request once the token exists
-    getTokenPromise.then(() => {
-      if (topArtists.length === 0) {
-        setTopArtists(getTopArtists(token))
+    getTokenPromise.then(async () => {
+      try {
+        const likedTracks = await getLikedTracks(token)
+        console.log(likedTracks)
+
+      } catch (error) {
+        console.log(error)
       }
     });
 
 
-      
-      
-    
-  },[token, topArtists, setTopArtists])
 
 
+
+  }, [token])
 
   const logout = () => {
     setToken("")
