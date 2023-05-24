@@ -5,6 +5,11 @@ export const topArtistsState = atom({
     default: [],
 })
 
+export const likedSongsState = atom({
+    key: 'likedSongsState',
+    default: []
+})
+
 export const numOfItems = atom({
     key: 'numOfItems',
     default: ""

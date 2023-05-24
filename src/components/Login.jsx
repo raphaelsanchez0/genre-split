@@ -8,6 +8,7 @@ import { getTopItems, getLikedTracks } from '../assets/api'
 export default function Login() {
   const [token, setToken] = useState("")
   const [topArtists, setTopArtists] = useRecoilState(topArtistsState);
+  const [likedSongs, setLikedSongs] = useRecoilState(likedSongsState)
   const [counter, setCounter] = useState(0)
 
   const CLIENT_ID = "420d2cfc497641c4965d36181d8c04a9"

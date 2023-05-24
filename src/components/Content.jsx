@@ -9,6 +9,7 @@ export default function Content() {
     const [numOfItems, setNumOfItems] = useState(0)
     const [itemType, setItemType] = useState(0)
 
+
     const handleSelectNumOfItems = (event) => {
         setNumOfItems(event.target.value)
     }
