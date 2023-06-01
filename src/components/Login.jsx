@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useRecoilState } from 'recoil'
-import { topArtistsState } from '../assets/atoms'
+import { topArtistsState, likedSongsState } from '../assets/atoms'
 import { getTopItems, getLikedTracks } from '../assets/api'
 
 
@@ -9,7 +9,7 @@ export default function Login() {
   const [token, setToken] = useState("")
   const [topArtists, setTopArtists] = useRecoilState(topArtistsState);
   const [likedSongs, setLikedSongs] = useRecoilState(likedSongsState)
-  const [counter, setCounter] = useState(0)
+
 
   const CLIENT_ID = "420d2cfc497641c4965d36181d8c04a9"
   const REDIRECT_URI = "http://localhost:5173"
@@ -50,7 +50,7 @@ export default function Login() {
     getTokenPromise.then(async () => {
       try {
         const likedTracks = await getLikedTracks(token)
-        console.log(likedTracks)
+        setLikedSongs(likedTracks);
 
       } catch (error) {
         console.log(error)

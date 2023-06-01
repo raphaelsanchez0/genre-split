@@ -11,16 +11,11 @@ import Content from './Content'
 
 export default function App() {
 
-  const [topArtists, setTopArtists] = useRecoilState(topArtistsState)
-  function handleTopArtists() {
-    console.log(topArtists)
-  }
+
 
   return (
     <div className='App'>
       <Navbar />
-
-      <button onClick={handleTopArtists}></button>
       <Content />
 
 
