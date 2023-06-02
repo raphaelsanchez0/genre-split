@@ -12,7 +12,6 @@ export default function Playlist(props) {
                 <div className='songs-stat'>
                     <img className="music-note" src={musicNote}></img>
                     <h3>{props.numOfTracks} Tracks</h3>
-
                 </div>
 
             </div>

@@ -49,3 +49,36 @@ export async function getLikedTracks(token) {
   console.log(allTracks.length)
   return allTracks
 }
+
+export async function getUserPlaylists(token) {
+  const limit = 50;
+  let offset = 0;
+  let allUserPlaylists = []
+  while (true) {
+    const url = `https://api.spotify.com/v1/me/playlists?limit=${limit}&offset=${offset}`
+    const headers = {
+      Authorization: `Bearer ${token}`
+    };
+
+    try {
+      const response = await axios.get(url, { headers })
+      const data = response.data;
+
+      //add playlists to allUserPlaylists
+      const items = data.items
+      allUserPlaylists = allUserPlaylists.concat(items)
+
+      if (items.length < limit) {
+        break
+      }
+
+      offset += limit;
+
+
+    } catch (error) {
+      console.error(`Error retreiving tracks:${error}`)
+      break
+    }
+  }
+  return allUserPlaylists;
+}

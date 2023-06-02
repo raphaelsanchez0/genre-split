@@ -19,3 +19,8 @@ export const itemType = atom({
     key: 'itemType',
     default: ""
 })
+
+export const tokenState = atom({
+    key: 'tokenState',
+    default: ""
+})

@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useRecoilState } from 'recoil'
-import { topArtistsState, likedSongsState } from '../assets/atoms'
+import { topArtistsState, likedSongsState, tokenState } from '../assets/atoms'
 import { getTopItems, getLikedTracks } from '../assets/api'
 
 
 export default function Login() {
-  const [token, setToken] = useState("")
+  //const [token, setToken] = useState("")
+  const [token, setToken] = useRecoilState(tokenState)
   const [topArtists, setTopArtists] = useRecoilState(topArtistsState);
   const [likedSongs, setLikedSongs] = useRecoilState(likedSongsState)
 
@@ -15,7 +16,7 @@ export default function Login() {
   const REDIRECT_URI = "http://localhost:5173"
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "token"
-  const SCOPE = 'user-library-read'
+  const SCOPE = 'playlist-modify-public playlist-read-private playlist-modify-private user-top-read user-library-read'
 
   //checks for token in local storage and sets token's state to that token if so
   useEffect(() => {
@@ -71,7 +72,8 @@ export default function Login() {
 
   function handleLogin(e) {
     e.preventDefault();
-    window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
+    const scopes = SCOPE.replace(' ', '%20');
+    window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${scopes}`
   }
 
 
