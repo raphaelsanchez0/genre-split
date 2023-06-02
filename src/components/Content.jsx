@@ -34,6 +34,17 @@ export default function Content() {
         });
     }, [token])
 
+    const playlists = userPlaylists.map((playlist) => {
+        return <Playlist
+            coverImage={playlist.images[0].url}
+            title={playlist.name}
+            numOfTracks={playlist.tracks.total}
+
+
+        />
+    })
+
+
 
     return (
         <div className="content">
@@ -45,7 +56,8 @@ export default function Content() {
 
                 : <div className="playlists">
                     <Playlist coverImage={heart} title="Liked Songs" numOfTracks="521" />
-                    <Playlist />
+
+                    {playlists}
                 </div>
 
             }
