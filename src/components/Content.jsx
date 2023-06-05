@@ -11,7 +11,7 @@ import Playlist from "./Playlist";
 export default function Content() {
     const [token, setToken] = useRecoilState(tokenState)
     const [receivedPlaylists, setReceivedPlaylists] = useState(true);
-    const [userPlaylists, setUserPlaylists] = useState()
+    const [userPlaylists, setUserPlaylists] = useState([])
 
     useEffect(() => {
         // Use a Promise to wait for the token to exist
