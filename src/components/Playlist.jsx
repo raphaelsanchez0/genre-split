@@ -1,6 +1,7 @@
 
 import shuffle from '../assets/img/shuffle.svg'
 import musicNote from '../assets/img/music-note.png'
+import { Link, Route, Routes } from 'react-router-dom'
 
 
 export default function Playlist(props) {
@@ -15,10 +16,13 @@ export default function Playlist(props) {
                 </div>
 
             </div>
-            <button className='shuffle-btn'>
-                <img src={shuffle}></img>
-            </button>
+            <Link to={`splitter/${props.id}`} className='shuffle-btn'>
+                <button>
+                    <img src={shuffle}></img>
+                </button>
+            </Link>
 
-        </div>
+        </div >
+
     )
 }

@@ -7,6 +7,9 @@ import { getUserPlaylists } from "../assets/api";
 
 
 import Playlist from "./Playlist";
+import Playlists from "./Playlists";
+import { Route, Routes } from "react-router-dom";
+import PlaylistSplitter from "./PlaylistSplitter";
 
 export default function Content() {
     const [token, setToken] = useRecoilState(tokenState)
@@ -26,6 +29,7 @@ export default function Content() {
             try {
                 const userPlaylists = await getUserPlaylists(token)
                 setUserPlaylists(userPlaylists);
+
                 console.log(userPlaylists)
 
             } catch (error) {
@@ -36,6 +40,7 @@ export default function Content() {
 
     const playlists = userPlaylists.map((playlist) => {
         return <Playlist
+            id={playlist.id}
             coverImage={playlist.images[0].url}
             title={playlist.name}
             numOfTracks={playlist.tracks.total}
@@ -48,20 +53,11 @@ export default function Content() {
 
     return (
         <div className="content">
-            <h1>Your Playlists</h1>
 
-            {!receivedPlaylists ?
-                <button className="getPlaylists"></button>
-
-
-                : <div className="playlists">
-                    <Playlist coverImage={heart} title="Liked Songs" numOfTracks="521" />
-
-                    {playlists}
-                </div>
-
-            }
-
+            <Routes>
+                <Route path="/" element={<Playlists playlists={playlists} />} />
+                <Route path="/splitter/:id" element={<PlaylistSplitter />} />
+            </Routes>
 
         </div>
     )
