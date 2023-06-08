@@ -1,36 +1,63 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import { getPlaylistInfo } from '../assets/api'
+import { useLocation, useParams } from "react-router-dom"
+import { getPlaylistInfo, getArtistGenre } from '../assets/api'
 import { useRecoilState } from 'recoil'
 import { tokenState } from "../assets/atoms"
+import Playlist from "./Playlist"
 
 export default function PlaylistSplitter() {
     const [token, setToken] = useRecoilState(tokenState)
     const { id } = useParams()
     const [playlistInfo, setPlaylistInfo] = useState([])
+    const [simpleTracks, setSimpleTracks] = useState([])
+    const [genreCoutner, setGenreCounter] = useState([])
+
+    const location = useLocation()
 
     function createArrayOfOnlyTracks(playlistInfo) {
-        const tracks = playlistInfo.tracks.items
+        const rundundantTracks = playlistInfo.tracks.items
         const onlyTracks = tracks.map(rawTrack => {
             return rawTrack.track
         })
         return onlyTracks
     }
 
-    function handleFormatTracks(onlyTracks) {
+    //cuts playlistInfo down into an array of tracks, with only whats needed
+    function formatTracks(playlistInfo) {
 
+        const tracks = playlistInfo.tracks.items
+        //onlytracks contains the tracks with all of their addtional details
+        const onlyTracks = tracks.map(rawTrack => {
+            return rawTrack.track
+        })
         let formatedTracks = []
         onlyTracks.forEach(track => {
             let extractedAttributes = {
                 name: track.name,
                 trackId: track.id,
                 artist: track.artists[0].name,
-                artistId: track.artists[0].id,
+                artistId: (track.artists[0].id).split("/").pop(),
                 coverImg: track.album.images[0].url
             }
             formatedTracks.push(extractedAttributes)
         })
         return formatedTracks
+    }
+
+    function addGenres(formattedTracks) {
+        formattedTracks.forEach(track => {
+            const genrePromise = getArtistGenre(token, track.artistId)
+            genrePromise.then(genre => {
+                track.genres = genre;
+            })
+        })
+        return formattedTracks;
+    }
+
+    function getGenreCount(tracks) {
+        tracks.forEach(track => {
+            console.log(track)
+        })
     }
 
 
@@ -47,12 +74,15 @@ export default function PlaylistSplitter() {
             try {
                 const playlistInfo = await getPlaylistInfo(token, id)
                 setPlaylistInfo(playlistInfo);
+                console.log(playlistInfo)
 
-                const tracks = createArrayOfOnlyTracks(playlistInfo)
+                const formattedTracks = formatTracks(playlistInfo)
 
-                const formattedTracks = handleFormatTracks(tracks)
+                const formatedTrackWithGenres = addGenres(formattedTracks)
 
-                console.log(formattedTracks)
+                setSimpleTracks(formatedTrackWithGenres)
+
+
 
             } catch (error) {
                 console.log(error)
@@ -66,6 +96,20 @@ export default function PlaylistSplitter() {
 
 
     return (
-        <h1>{id}</h1>
+        <>
+
+            {Object.keys(playlistInfo).length > 0 ?
+                <div className="playlist-info">
+                    <img src={playlistInfo.images[0].url} />
+                    <h1>{playlistInfo.name}</h1>
+
+                </div> : <></>
+
+            }
+            <h1>{id}</h1>
+            <h1>{location.pathname}</h1>
+
+
+        </>
     )
 }
