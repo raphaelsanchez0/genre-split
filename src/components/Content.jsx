@@ -30,8 +30,6 @@ export default function Content() {
                 const userPlaylists = await getUserPlaylists(token)
                 setUserPlaylists(userPlaylists);
 
-                console.log(userPlaylists)
-
             } catch (error) {
                 console.log(error)
             }

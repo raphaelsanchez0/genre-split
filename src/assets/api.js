@@ -46,9 +46,26 @@ export async function getLikedTracks(token) {
       break
     }
   }
-  console.log(allTracks.length)
   return allTracks
 }
+
+export async function getPlaylistInfo(token, playlist_id) {
+  let data = []
+  const url = `https://api.spotify.com/v1/playlists/${playlist_id}`
+  const headers = {
+    Authorization: `Bearer ${token}`
+  };
+  try {
+    const response = await axios.get(url, { headers })
+    return response.data;
+  } catch (error) {
+    console.error(`Error retreiving playlist tracks:${error}`)
+  }
+}
+
+
+
+
 
 export async function getUserPlaylists(token) {
   const limit = 50;
@@ -76,9 +93,10 @@ export async function getUserPlaylists(token) {
 
 
     } catch (error) {
-      console.error(`Error retreiving tracks:${error}`)
+      console.error(`Error retreiving user playlists:${error}`)
       break
     }
   }
   return allUserPlaylists;
 }
+

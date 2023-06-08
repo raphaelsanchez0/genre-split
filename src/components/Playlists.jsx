@@ -7,7 +7,7 @@ export default function Playlists(props) {
             <h1>Your Playlists</h1>
             <div className="playlists">
 
-                <Playlist coverImage={heart} title="Liked Songs" numOfTracks="521" />
+                <Playlist id="me " coverImage={heart} title="Liked Songs" numOfTracks="521" />
                 {props.playlists}
 
             </div>
