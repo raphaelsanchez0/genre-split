@@ -50,7 +50,6 @@ export async function getLikedTracks(token) {
 }
 
 export async function getPlaylistInfo(token, playlist_id) {
-  let data = []
   const url = `https://api.spotify.com/v1/playlists/${playlist_id}`
   const headers = {
     Authorization: `Bearer ${token}`
@@ -62,10 +61,6 @@ export async function getPlaylistInfo(token, playlist_id) {
     console.error(`Error retreiving playlist tracks:${error}`)
   }
 }
-
-
-
-
 
 export async function getUserPlaylists(token) {
   const limit = 50;
@@ -98,5 +93,21 @@ export async function getUserPlaylists(token) {
     }
   }
   return allUserPlaylists;
+}
+
+export async function getArtistGenre(token, id) {
+  let genre = ""
+  const url = `https://api.spotify.com/v1/artists/${id}`
+  const headers = {
+    Authorization: `Bearer ${token}`
+  };
+  try {
+    const response = await axios.get(url, { headers })
+    const data = response.data
+    const genre = data.genres
+    return genre
+  } catch (error) {
+    console.log(`Error getting artist genre:${error}`)
+  }
 }
 

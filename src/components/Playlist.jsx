@@ -1,10 +1,14 @@
 
 import shuffle from '../assets/img/shuffle.svg'
 import musicNote from '../assets/img/music-note.png'
-import { Link, Route, Routes } from 'react-router-dom'
+import { Link, Route, Routes, useLocation } from 'react-router-dom'
 
 
 export default function Playlist(props) {
+    const location = useLocation()
+    const isInSplitter = location.pathname.startsWith("/splitter");
+
+
     return (
         <div className="playlist">
             <img src={props.coverImage} className='heart' />
@@ -16,11 +20,16 @@ export default function Playlist(props) {
                 </div>
 
             </div>
-            <Link to={`splitter/${props.id}`} className='shuffle-btn'>
-                <button>
-                    <img src={shuffle}></img>
-                </button>
-            </Link>
+            {!isInSplitter ?
+                <Link to={`splitter/${props.id}`} className='shuffle-btn'>
+                    <button>
+                        <img src={shuffle}></img>
+                    </button>
+                </Link> : <></>
+
+
+            }
+
 
         </div >
 
