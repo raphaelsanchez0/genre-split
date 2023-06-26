@@ -4,7 +4,7 @@ import { getPlaylistInfo, getArtistGenre } from '../assets/api'
 import { useRecoilState } from 'recoil'
 import { tokenState } from "../assets/atoms"
 import Playlist from "./Playlist"
-import { Track } from '../assets/Track'
+import Track from "../assets/Track";
 
 export default function PlaylistSplitter() {
     const [token, setToken] = useRecoilState(tokenState)
@@ -33,14 +33,15 @@ export default function PlaylistSplitter() {
         })
         let formatedTracks = []
         onlyTracks.forEach(track => {
-            let extractedAttributes = {
-                name: track.name,
-                trackId: track.id,
-                artist: track.artists[0].name,
-                artistId: (track.artists[0].id).split("/").pop(),
-                coverImg: track.album.images[0].url
-            }
-            formatedTracks.push(extractedAttributes)
+
+            const trackObject = new Track(
+                track.name,
+                track.id,
+                track.artists[0].name,
+                (track.artists[0].id).split("/").pop(),
+                track.album.images[0].url)
+
+            formatedTracks.push(trackObject)
         })
         return formatedTracks
     }
@@ -48,8 +49,9 @@ export default function PlaylistSplitter() {
     function addGenres(formattedTracks) {
         formattedTracks.forEach(track => {
             const genrePromise = getArtistGenre(token, track.artistId)
-            genrePromise.then(genre => {
-                track.genres = genre;
+            genrePromise.then(genres => {
+                track.setGenres(genres)
+
             })
         })
         return formattedTracks;
@@ -58,14 +60,15 @@ export default function PlaylistSplitter() {
     function getGenreCount(tracks) {
         let genreCount = {};
         tracks.forEach(track => {
-            const trackGenres = track.genres;
-            trackGenres.forEach(genre => {
-                if (genreCount.hasOwnProperty(genre)) {
-                    genreCount[genre] += 1;
-                } else {
-                    genreCount[genre] = 1;
-                }
-            });
+            const trackGenres = track.getGenres
+            console.log(trackGenres)
+            // trackGenres.forEach(genre => {
+            //     if (genreCount.hasOwnProperty(genre)) {
+            //         genreCount[genre] += 1;
+            //     } else {
+            //         genreCount[genre] = 1;
+            //     }
+            // });
         });
         return genreCount;
     }
@@ -94,15 +97,20 @@ export default function PlaylistSplitter() {
             try {
                 const playlistInfo = await getPlaylistInfo(token, id)
                 setPlaylistInfo(playlistInfo);
-                console.log(playlistInfo)
+
 
                 const formattedTracks = formatTracks(playlistInfo)
 
                 const formatedTrackWithGenres = addGenres(formattedTracks)
+                console.log(formatedTrackWithGenres)
+                const genreCount = getGenreCount(formatedTrackWithGenres)
+                console.log(genreCount)
 
-                setSimpleTracks(formatedTrackWithGenres)
+                //console.log(getGenreCount(formatedTrackWithGenres))
 
-                console.log(eliminateOutliars(getGenreCount(simpleTracks)))
+                // setSimpleTracks(formatedTrackWithGenres)
+
+                // console.log(eliminateOutliars(getGenreCount(simpleTracks)))
 
 
             } catch (error) {
