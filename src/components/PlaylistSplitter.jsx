@@ -4,13 +4,14 @@ import { getPlaylistInfo, getArtistGenre } from '../assets/api'
 import { useRecoilState } from 'recoil'
 import { tokenState } from "../assets/atoms"
 import Playlist from "./Playlist"
+import { Track } from '../assets/Track'
 
 export default function PlaylistSplitter() {
     const [token, setToken] = useRecoilState(tokenState)
     const { id } = useParams()
     const [playlistInfo, setPlaylistInfo] = useState([])
     const [simpleTracks, setSimpleTracks] = useState([])
-    const [genreCoutner, setGenreCounter] = useState([])
+    const [genreCounter, setGenreCounter] = useState([])
 
     const location = useLocation()
 
@@ -55,9 +56,28 @@ export default function PlaylistSplitter() {
     }
 
     function getGenreCount(tracks) {
+        let genreCount = {};
         tracks.forEach(track => {
-            console.log(track)
-        })
+            const trackGenres = track.genres;
+            trackGenres.forEach(genre => {
+                if (genreCount.hasOwnProperty(genre)) {
+                    genreCount[genre] += 1;
+                } else {
+                    genreCount[genre] = 1;
+                }
+            });
+        });
+        return genreCount;
+    }
+
+    function eliminateOutliars(genreCount) {
+        Object.keys(genreCount).forEach(genre => {
+            if (genreCount[genre] === 1) {
+                delete genreCount[genre];
+            }
+        });
+
+        return genreCount;
     }
 
 
@@ -82,6 +102,7 @@ export default function PlaylistSplitter() {
 
                 setSimpleTracks(formatedTrackWithGenres)
 
+                console.log(eliminateOutliars(getGenreCount(simpleTracks)))
 
 
             } catch (error) {
