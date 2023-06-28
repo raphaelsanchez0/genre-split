@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil'
 import { tokenState } from "../assets/atoms"
 import Playlist from "./Playlist"
 import Track from "../assets/Track";
+import GenrePlaylistButton from "./GenrePlaylistButton"
 
 export default function PlaylistSplitter() {
     const [token, setToken] = useRecoilState(tokenState)
@@ -91,6 +92,11 @@ export default function PlaylistSplitter() {
 
         return arr;
     }
+    function addSongsToGenreCount(formatedTrackWithGenres, sortedGenreCount) {
+        Object.keys(formatedTrackWithGenres).forEach(track => {
+            console.log
+        })
+    }
 
 
     useEffect(() => {
@@ -118,7 +124,7 @@ export default function PlaylistSplitter() {
                 //sorts genreCounter in decending order
                 const sortedGenreCount = sortJSON(genreCounterWithNoOutliars)
 
-
+                console.log(formatedTrackWithGenres)
 
                 console.log(sortedGenreCount)
 
@@ -135,20 +141,46 @@ export default function PlaylistSplitter() {
 
 
     return (
-        <>
+        <div className="playlist-splitter">
 
             {Object.keys(playlistInfo).length > 0 ?
                 <div className="playlist-info">
                     <img src={playlistInfo.images[0].url} />
-                    <h1>{playlistInfo.name}</h1>
+                    <div className="text-stats">
+                        <h1 className="name">{playlistInfo.name}</h1>
+                        <h3 className="followers">{`${playlistInfo.followers.total} likes`}</h3>
+
+                    </div>
+
 
                 </div> : <></>
 
             }
-            <h1>{id}</h1>
-            <h1>{location.pathname}</h1>
+            <h1>Select the playlists you want to make</h1>
+            {/* <h1>{id}</h1>
+            <h1>{location.pathname}</h1> */}
+            <div className="buttons">
+                <div className="genre-playlists-buttons">
+                    <GenrePlaylistButton></GenrePlaylistButton>
+                    <GenrePlaylistButton></GenrePlaylistButton>
+                    <GenrePlaylistButton></GenrePlaylistButton>
+                    <GenrePlaylistButton></GenrePlaylistButton>
+
+                    <GenrePlaylistButton></GenrePlaylistButton>
+                    <GenrePlaylistButton></GenrePlaylistButton>
+                    <GenrePlaylistButton></GenrePlaylistButton>
 
 
-        </>
+
+
+                </div>
+                <div className="split-container">
+                    <button className="split">Create Playlists</button>
+                </div>
+
+            </div>
+
+
+        </div>
     )
 }
