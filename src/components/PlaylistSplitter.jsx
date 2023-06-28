@@ -11,7 +11,7 @@ export default function PlaylistSplitter() {
     const { id } = useParams()
     const [playlistInfo, setPlaylistInfo] = useState([])
     const [simpleTracks, setSimpleTracks] = useState([])
-    const [genreCounter, setGenreCounter] = useState([])
+    const [genreCounter, setGenreCounter] = useState({})
 
     const location = useLocation()
 
@@ -82,6 +82,16 @@ export default function PlaylistSplitter() {
         return genreCount;
     }
 
+    function sortJSON(json) {
+        // Convert the json object to an array of [key, value] pairs
+        let arr = Object.entries(json);
+
+        // Sort the array based on the second element of each pair (i.e., the value)
+        arr.sort((a, b) => b[1] - a[1]);
+
+        return arr;
+    }
+
 
     useEffect(() => {
         // Use a Promise to wait for the token to exist
@@ -97,17 +107,20 @@ export default function PlaylistSplitter() {
                 const playlistInfo = await getPlaylistInfo(token, id)
                 setPlaylistInfo(playlistInfo);
 
-
+                //formats tracks
                 const formattedTracks = await formatTracks(playlistInfo)
+                //adds genres
                 const formatedTrackWithGenres = await addGenres(formattedTracks)
+                //finds out how many songs are associated with genres
+                const genreCounterWithOutliars = getGenreCount(formatedTrackWithGenres)
+                //removes outliars
+                const genreCounterWithNoOutliars = eliminateOutliars(genreCounterWithOutliars)
+                //sorts genreCounter in decending order
+                const sortedGenreCount = sortJSON(genreCounterWithNoOutliars)
 
-                const genreCount = getGenreCount(formatedTrackWithGenres)
 
 
-
-                console.log(eliminateOutliars(genreCount))
-
-
+                console.log(sortedGenreCount)
 
 
             } catch (error) {
