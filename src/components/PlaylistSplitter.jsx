@@ -46,36 +46,35 @@ export default function PlaylistSplitter() {
         return formatedTracks
     }
 
-    function addGenres(formattedTracks) {
-        formattedTracks.forEach(track => {
-            const genrePromise = getArtistGenre(token, track.artistId)
-            genrePromise.then(genres => {
-                track.setGenres(genres)
-
+    async function addGenres(formattedTracks) {
+        await Promise.all(
+            formattedTracks.map(async track => {
+                const genres = await getArtistGenre(token, track.artistId);
+                track.setGenres(genres);
             })
-        })
+        );
         return formattedTracks;
     }
 
     function getGenreCount(tracks) {
         let genreCount = {};
         tracks.forEach(track => {
-            const trackGenres = track.getGenres
-            console.log(trackGenres)
-            // trackGenres.forEach(genre => {
-            //     if (genreCount.hasOwnProperty(genre)) {
-            //         genreCount[genre] += 1;
-            //     } else {
-            //         genreCount[genre] = 1;
-            //     }
-            // });
+            const trackGenres = track.genres
+
+            trackGenres.forEach(genre => {
+                if (genreCount.hasOwnProperty(genre)) {
+                    genreCount[genre] += 1;
+                } else {
+                    genreCount[genre] = 1;
+                }
+            });
         });
         return genreCount;
     }
 
     function eliminateOutliars(genreCount) {
         Object.keys(genreCount).forEach(genre => {
-            if (genreCount[genre] === 1) {
+            if (genreCount[genre] <= 2) {
                 delete genreCount[genre];
             }
         });
@@ -99,18 +98,16 @@ export default function PlaylistSplitter() {
                 setPlaylistInfo(playlistInfo);
 
 
-                const formattedTracks = formatTracks(playlistInfo)
+                const formattedTracks = await formatTracks(playlistInfo)
+                const formatedTrackWithGenres = await addGenres(formattedTracks)
 
-                const formatedTrackWithGenres = addGenres(formattedTracks)
-                console.log(formatedTrackWithGenres)
                 const genreCount = getGenreCount(formatedTrackWithGenres)
-                console.log(genreCount)
 
-                //console.log(getGenreCount(formatedTrackWithGenres))
 
-                // setSimpleTracks(formatedTrackWithGenres)
 
-                // console.log(eliminateOutliars(getGenreCount(simpleTracks)))
+                console.log(eliminateOutliars(genreCount))
+
+
 
 
             } catch (error) {
