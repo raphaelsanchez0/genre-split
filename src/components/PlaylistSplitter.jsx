@@ -93,9 +93,22 @@ export default function PlaylistSplitter() {
         return arr;
     }
     function addSongsToGenreCount(formatedTrackWithGenres, sortedGenreCount) {
-        Object.keys(formatedTrackWithGenres).forEach(track => {
-            console.log
-        })
+        const modifiedSortedGenreCount = [...sortedGenreCount]; // Create a copy of sortedGenreCount
+
+        formatedTrackWithGenres.forEach((track) => {
+            track.genres.forEach((genre) => {
+                modifiedSortedGenreCount.forEach((selectedGenre) => {
+                    if (genre === selectedGenre[0]) {
+                        if (!selectedGenre[2]) {
+                            selectedGenre[2] = []; // Create an empty array for tracks if it doesn't exist
+                        }
+                        selectedGenre[2].push(track); // Append track to the tracks array
+                    }
+                });
+            });
+        });
+
+        return modifiedSortedGenreCount; // Return the modified copy of sortedGenreCount
     }
 
 
@@ -128,7 +141,9 @@ export default function PlaylistSplitter() {
 
                 console.log(sortedGenreCount)
 
+                const addedGenreCount = addSongsToGenreCount(formatedTrackWithGenres, sortedGenreCount)
 
+                console.log(addedGenreCount)
             } catch (error) {
                 console.log(error)
             }
