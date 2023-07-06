@@ -158,7 +158,7 @@ export default function PlaylistSplitter() {
 
 
     const toggleButtonState = (genre) => {
-        handleChangingGenreArrayValue(genre)
+        handleChangingGenreArrayValue(genre);
     }
 
     function handleChangingGenreArrayValue(genre) {
@@ -175,12 +175,13 @@ export default function PlaylistSplitter() {
     }
 
 
-    const genrePlaylists = genresWithTracks.map((genresWithTracks => {
+    const genrePlaylists = genresWithTracks.map((genreWithTracks) => {
         return <GenrePlaylistButton
-            genre={genresWithTracks[0]}
-            toggleState={() => toggleButtonState(genresWithTracks[0])}
+            genre={genreWithTracks[0]}
+            toggleState={() => toggleButtonState(genreWithTracks[0])}
+            selected={genreWithTracks[3]} // Pass the selected state to GenrePlaylistButton
         />
-    }))
+    })
 
 
 
