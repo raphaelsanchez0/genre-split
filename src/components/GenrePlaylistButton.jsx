@@ -12,7 +12,7 @@ export default function GenrePlaylistButton(props) {
     return (
         <div className="genre-playlists-button">
             <button
-                onClick={props.toggleState(props.genre)}
+                onClick={() => props.toggleState(props.genre)}
                 style={{
                     backgroundColor: selected ? '#68cf65' : '#e9e9ed',
 
