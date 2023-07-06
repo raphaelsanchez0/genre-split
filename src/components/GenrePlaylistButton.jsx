@@ -1,16 +1,18 @@
 import { useState } from "react"
+import search from '../assets/img/search.svg'
 
-export default function GenrePlaylistButton() {
+export default function GenrePlaylistButton(props) {
     const [selected, setSelected] = useState(false)
 
-    const toggleState = () => {
-        setSelected(prevState => !prevState);
-    }
+    // const toggleState = () => {
+    //     setSelected(prevState => !prevState);
+    //     props.toggleState();
+    // }
 
     return (
         <div className="genre-playlists-button">
             <button
-                onClick={toggleState}
+                onClick={props.toggleState(props.genre)}
                 style={{
                     backgroundColor: selected ? '#68cf65' : '#e9e9ed',
 
@@ -18,7 +20,7 @@ export default function GenrePlaylistButton() {
 
 
 
-            >modern alternative rock</button>
+            >{props.genre}</button>
         </div>
 
     )

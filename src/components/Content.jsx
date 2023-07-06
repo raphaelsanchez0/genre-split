@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Artists from "./Artists";
+
 import { useRecoilState } from 'recoil'
 import heart from '../assets/img/heart.png'
 import { numOfItems, itemType, tokenState } from '../assets/atoms'

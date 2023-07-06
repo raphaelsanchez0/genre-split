@@ -2,10 +2,11 @@ import { useEffect, useState } from "react"
 import { useLocation, useParams } from "react-router-dom"
 import { getPlaylistInfo, getArtistGenre } from '../assets/api'
 import { useRecoilState } from 'recoil'
-import { tokenState } from "../assets/atoms"
+import { tokenState, genresWithTracksState } from "../assets/atoms"
 import Playlist from "./Playlist"
 import Track from "../assets/Track";
 import GenrePlaylistButton from "./GenrePlaylistButton"
+
 
 export default function PlaylistSplitter() {
     const [token, setToken] = useRecoilState(tokenState)
@@ -13,6 +14,8 @@ export default function PlaylistSplitter() {
     const [playlistInfo, setPlaylistInfo] = useState([])
     const [simpleTracks, setSimpleTracks] = useState([])
     const [genreCounter, setGenreCounter] = useState({})
+
+    const [genresWithTracks, setGenresWithTracks] = useRecoilState(genresWithTracksState)
 
     const location = useLocation()
 
@@ -103,7 +106,9 @@ export default function PlaylistSplitter() {
                             selectedGenre[2] = []; // Create an empty array for tracks if it doesn't exist
                         }
                         selectedGenre[2].push(track); // Append track to the tracks array
+
                     }
+                    selectedGenre[3] = false
                 });
             });
         });
@@ -137,18 +142,46 @@ export default function PlaylistSplitter() {
                 //sorts genreCounter in decending order
                 const sortedGenreCount = sortJSON(genreCounterWithNoOutliars)
 
-                console.log(formatedTrackWithGenres)
 
-                console.log(sortedGenreCount)
+                //2d array of genre counter w/ 
+                const genresWithTracks = addSongsToGenreCount(formatedTrackWithGenres, sortedGenreCount)
 
-                const addedGenreCount = addSongsToGenreCount(formatedTrackWithGenres, sortedGenreCount)
-
-                console.log(addedGenreCount)
+                console.log(genresWithTracks)
+                setGenresWithTracks(genresWithTracks)
             } catch (error) {
                 console.log(error)
             }
         });
     }, [token])
+
+
+
+
+    const toggleButtonState = (genre) => {
+        handleChangingGenreArrayValue(genre)
+    }
+
+    function handleChangingGenreArrayValue(genre) {
+        // Map over the genresWithTracks array and for each entry check if the genre matches
+        setGenresWithTracks(genresWithTracks.map(entry => {
+            if (entry[0] === genre) {
+                // If it matches, return a new array with the same genre and count, but with the toggled value for selected
+                return [entry[0], entry[1], entry[2], !entry[3]];
+            } else {
+                // If it doesn't match, return the entry unchanged
+                return entry;
+            }
+        }));
+    }
+
+
+    const genrePlaylists = genresWithTracks.map((genresWithTracks => {
+        return <GenrePlaylistButton
+            genre={genresWithTracks[0]}
+            toggleState={() => toggleButtonState(genresWithTracks[0])}
+        />
+    }))
+
 
 
 
@@ -176,15 +209,8 @@ export default function PlaylistSplitter() {
             <h1>{location.pathname}</h1> */}
             <div className="buttons">
                 <div className="genre-playlists-buttons">
-                    <GenrePlaylistButton></GenrePlaylistButton>
-                    <GenrePlaylistButton></GenrePlaylistButton>
-                    <GenrePlaylistButton></GenrePlaylistButton>
-                    <GenrePlaylistButton></GenrePlaylistButton>
 
-                    <GenrePlaylistButton></GenrePlaylistButton>
-                    <GenrePlaylistButton></GenrePlaylistButton>
-                    <GenrePlaylistButton></GenrePlaylistButton>
-
+                    {genrePlaylists}
 
 
 

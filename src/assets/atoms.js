@@ -24,3 +24,8 @@ export const tokenState = atom({
     key: 'tokenState',
     default: ""
 })
+
+export const genresWithTracksState = atom({
+    key: 'genresWithTrackState',
+    default: []
+})
