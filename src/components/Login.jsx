@@ -16,7 +16,7 @@ export default function Login() {
   const REDIRECT_URI = "http://localhost:5173"
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "token"
-  const SCOPE = 'playlist-modify-public playlist-read-private playlist-modify-private user-top-read user-library-read'
+  const SCOPE = 'playlist-modify-public playlist-read-private playlist-modify-private user-top-read user-library-read user-read-private user-read-email'
 
   //checks for token in local storage and sets token's state to that token if so
   useEffect(() => {

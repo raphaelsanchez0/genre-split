@@ -7,6 +7,7 @@ import Playlist from "./Playlist"
 import Track from "../assets/Track";
 import GenrePlaylistButton from "./GenrePlaylistButton"
 import { Link, Route, Routes, useLocation, useParams } from 'react-router-dom'
+import noImage from '../assets/img/no-image.svg'
 
 
 export default function PlaylistSplitter() {
@@ -201,7 +202,11 @@ export default function PlaylistSplitter() {
 
             {Object.keys(playlistInfo).length > 0 ?
                 <div className="playlist-info">
-                    <img src={playlistInfo.images[0].url} />
+                    {playlistInfo.images[0] ? (
+                        <img src={playlistInfo.images[0].url} />
+                    ) : (
+                        <img src={noImage} />
+                    )}
                     <div className="text-stats">
                         <h1 className="name">{playlistInfo.name}</h1>
                         <h3 className="followers">{`${playlistInfo.followers.total} likes`}</h3>

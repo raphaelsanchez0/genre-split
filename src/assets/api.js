@@ -17,9 +17,33 @@ export async function getTopItems(token, type, limit) {
   }
 }
 
-export async function createPlaylist(token, name) {
+export async function getUserId(token) {
   try {
-    const response = await axios.post('')
+    const response = await axios.get(`https://api.spotify.com/v1/me`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response.data.id
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function createPlaylist(token, name, userId) {
+  const url = `https://api.spotify.com/v1/users/${userId}/playlists`
+  const requestBody = {
+    name: name
+  }
+  const headers = {
+    'Authorization': `Bearer ${token}`
+  }
+  try {
+    const response = await axios.post(url, requestBody, { headers });
+    console.log(response.data)
+
+  } catch (err) {
+    console.log
   }
 }
 

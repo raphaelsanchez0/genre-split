@@ -4,6 +4,7 @@ import { useRecoilState } from 'recoil'
 import heart from '../assets/img/heart.png'
 import { numOfItems, itemType, tokenState } from '../assets/atoms'
 import { getUserPlaylists } from "../assets/api";
+import noImage from '../assets/img/no-image.svg'
 
 
 import Playlist from "./Playlist";
@@ -38,9 +39,10 @@ export default function Content() {
     }, [token])
 
     const playlists = userPlaylists.map((playlist) => {
+        const coverImage = playlist.images[0] ? playlist.images[0].url : noImage
         return <Playlist
             id={playlist.id}
-            coverImage={playlist.images[0].url}
+            coverImage={coverImage}
             title={playlist.name}
             numOfTracks={playlist.tracks.total}
 
