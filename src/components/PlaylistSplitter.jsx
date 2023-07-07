@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
-import { useLocation, useParams } from "react-router-dom"
+//0import { useLocation, useParams } from "react-router-dom"
 import { getPlaylistInfo, getArtistGenre } from '../assets/api'
 import { useRecoilState } from 'recoil'
 import { tokenState, genresWithTracksState } from "../assets/atoms"
 import Playlist from "./Playlist"
 import Track from "../assets/Track";
 import GenrePlaylistButton from "./GenrePlaylistButton"
+import { Link, Route, Routes, useLocation, useParams } from 'react-router-dom'
 
 
 export default function PlaylistSplitter() {
@@ -18,6 +19,8 @@ export default function PlaylistSplitter() {
     const [genresWithTracks, setGenresWithTracks] = useRecoilState(genresWithTracksState)
 
     const location = useLocation()
+
+
 
     function createArrayOfOnlyTracks(playlistInfo) {
         const rundundantTracks = playlistInfo.tracks.items
@@ -154,6 +157,10 @@ export default function PlaylistSplitter() {
         });
     }, [token])
 
+    const handleCreatingPlaylists = () => {
+        console.log("Test")
+    }
+
 
 
 
@@ -217,7 +224,11 @@ export default function PlaylistSplitter() {
 
                 </div>
                 <div className="split-container">
-                    <button className="split">Create Playlists</button>
+                    <Link to={`/creator`}>
+                        <button className="split"
+                            onClick={() => handleCreatingPlaylists()}
+                        >Create Playlists</button>
+                    </Link>
                 </div>
 
             </div>

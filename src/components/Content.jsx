@@ -10,6 +10,7 @@ import Playlist from "./Playlist";
 import Playlists from "./Playlists";
 import { Route, Routes } from "react-router-dom";
 import PlaylistSplitter from "./PlaylistSplitter";
+import PlaylistCreator from "./PlaylistCreator";
 
 export default function Content() {
     const [token, setToken] = useRecoilState(tokenState)
@@ -55,6 +56,7 @@ export default function Content() {
             <Routes>
                 <Route path="/" element={<Playlists playlists={playlists} />} />
                 <Route path="/splitter/:id" element={<PlaylistSplitter />} />
+                <Route path="/creator/" element={<PlaylistCreator />} />
             </Routes>
 
         </div>
