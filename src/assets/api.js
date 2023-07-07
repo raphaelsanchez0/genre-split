@@ -40,7 +40,7 @@ export async function createPlaylist(token, name, userId) {
   }
   try {
     const response = await axios.post(url, requestBody, { headers });
-    console.log(response.data)
+    return (response.data)
 
   } catch (err) {
     console.log
