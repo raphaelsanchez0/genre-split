@@ -17,6 +17,14 @@ export async function getTopItems(token, type, limit) {
   }
 }
 
+export async function createPlaylist(token, name) {
+  try {
+    const response = await axios.post('')
+  }
+}
+
+
+
 export async function getLikedTracks(token) {
   const limit = 50;
   let offset = 0;
@@ -110,4 +118,5 @@ export async function getArtistGenre(token, id) {
     console.log(`Error getting artist genre:${error}`)
   }
 }
+
 
