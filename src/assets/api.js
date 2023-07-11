@@ -30,25 +30,6 @@ export async function getUserId(token) {
   }
 }
 
-export async function createPlaylist(token, name, userId) {
-  const url = `https://api.spotify.com/v1/users/${userId}/playlists`
-  const requestBody = {
-    name: name
-  }
-  const headers = {
-    'Authorization': `Bearer ${token}`
-  }
-  try {
-    const response = await axios.post(url, requestBody, { headers });
-    return (response.data)
-
-  } catch (err) {
-    console.log
-  }
-}
-
-
-
 export async function getLikedTracks(token) {
   const limit = 50;
   let offset = 0;
@@ -143,4 +124,38 @@ export async function getArtistGenre(token, id) {
   }
 }
 
+export async function createPlaylist(token, name, userId) {
+  const url = `https://api.spotify.com/v1/users/${userId}/playlists`
+  const requestBody = {
+    name: name
+  }
+  const headers = {
+    'Authorization': `Bearer ${token}`
+  }
+  try {
+    const response = await axios.post(url, requestBody, { headers });
+    return (response.data)
 
+  } catch (err) {
+    console.log
+  }
+}
+
+
+
+export async function addToPlaylist(token, playlistId, playlistObject) {
+
+}
+
+export function convertToSpotifyURI(trackId) {
+  return `spotify:track:${trackId}`;
+}
+
+export function createArrayOfFormatedSpotifyURIs(arrayOfTracks) {
+  let URIs = []
+  arrayOfTracks.forEach(track => {
+    const formattedURI = convertToSpotifyURI(track.id)
+    URIs.push(formattedURI)
+  });
+  return URIs
+}
