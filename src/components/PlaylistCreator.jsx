@@ -11,24 +11,37 @@ export default function PlaylistCreator(props) {
 
     const [userPlaylists, setUserPlaylists] = useRecoilState(userPlaylistsState)
 
+    const [createdPlaylists, setCreatedPlaylists] = useState([])
+
+    const [userMessage, setUserMessage] = useState("")
+
+    function handleCreatedPlaylistString(playlists) {
+        const length = playlists.length;
+
+
+        if (length === 1) {
+            return `${playlists[0]} playlist has been created`;
+        }
+
+        const allButLast = playlists.slice(0, length - 1).join(', ');
+        const last = playlists[length - 1];
+
+        return `${allButLast}, and ${last} playlists have been created`;
+    }
+
 
 
     useEffect(() => {
         console.log(userPlaylists, "userplaylist");
 
-
-
         (async () => {
-            await Promise.allSettled(
-                genresWithTracks.map(async (genre) => {
-                    if (genre[3] === true) {
-                        // If the track has been selected by the user
-
-                        try {
-
-
-
+            try {
+                await Promise.allSettled(
+                    genresWithTracks.map(async (genre) => {
+                        if (genre[3] === true) {
+                            // If the track has been selected by the user
                             const playlistData = await createPlaylist(token, genre[0], userId);
+                            setCreatedPlaylists(prevCreatedPlaylists => [...prevCreatedPlaylists, genre[0]])
                             // creates a new playlist for the genre
                             const playlistId = playlistData.id;
                             const tracksInGenre = genre[2];
@@ -36,15 +49,21 @@ export default function PlaylistCreator(props) {
                             // get all the ids from genre[2]
                             const response = await addToPlaylist(token, playlistId, URIs);
                             console.log(response, "test");
-                        } catch (err) {
-                            console.error(err);
                         }
-                    }
-                })
-            );
+                    })
+                );
+
+                setUserMessage(handleCreatedPlaylistString(createdPlaylists));
+            } catch (err) {
+                console.error(err);
+            }
         })();
     }, [genresWithTracks]);
 
-    return <></>;
+    return <>
+        {userMessage === "" ? <></> : <h1>{userMessage}</h1>}
+
+
+    </>;
 }
 
