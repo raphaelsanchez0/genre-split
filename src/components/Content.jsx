@@ -58,6 +58,7 @@ export default function Content() {
             <Routes>
                 <Route path="/" element={<Playlists playlists={playlists} />} />
                 <Route path="/splitter/:id" element={<PlaylistSplitter />} />
+                <Route path="/splitter/me" element={<PlaylistSplitter />} />
                 <Route path="/creator/" element={<PlaylistCreator />} />
             </Routes>
 

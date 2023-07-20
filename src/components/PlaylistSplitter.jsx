@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 //0import { useLocation, useParams } from "react-router-dom"
-import { getPlaylistInfo, getArtistGenre } from '../assets/api'
+import { getPlaylistInfo, getArtistGenre, getLikedTracks } from '../assets/api'
 import { useRecoilState } from 'recoil'
 import { tokenState, genresWithTracksState, userIdState, userPlaylistsState } from "../assets/atoms"
 import Playlist from "./Playlist"
@@ -20,7 +20,11 @@ export default function PlaylistSplitter() {
     const [playlistInfo, setPlaylistInfo] = useState([])
     const [genresWithTracks, setGenresWithTracks] = useRecoilState(genresWithTracksState)
 
+    const [pathname, setPathname] = useState("")
+
     const location = useLocation()
+
+
 
 
 
@@ -121,12 +125,11 @@ export default function PlaylistSplitter() {
         return modifiedSortedGenreCount; // Return the modified copy of sortedGenreCount
     }
 
-    useEffect(() => {
-        console.log(genresWithTracks)
-    }, [genresWithTracks])
+
 
 
     useEffect(() => {
+
         // Use a Promise to wait for the token to exist
         const getTokenPromise = new Promise(resolve => {
             if (token) {
@@ -137,7 +140,15 @@ export default function PlaylistSplitter() {
         // Only make the API request once the token exists
         getTokenPromise.then(async () => {
             try {
-                const playlistInfo = await getPlaylistInfo(token, id)
+
+                if (location.pathname === "/splitter/me") {
+                    const playlistInfo = await getLikedTracks(token)
+                } else {
+                    const playlistInfo = await getPlaylistInfo(token, id)
+                }
+
+                console.log(playlistInfo)
+
                 setPlaylistInfo(playlistInfo);
 
                 //formats tracks
