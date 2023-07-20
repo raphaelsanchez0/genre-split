@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { useRecoilState } from 'recoil'
 import heart from '../assets/img/heart.png'
-import { numOfItems, itemType, tokenState, userPlaylistsState } from '../assets/atoms'
+import { numOfItems, itemType, tokenState } from '../assets/atoms'
 import { getUserPlaylists } from "../assets/api";
 import noImage from '../assets/img/no-image.svg'
 
@@ -16,7 +16,7 @@ import PlaylistCreator from "./PlaylistCreator";
 export default function Content() {
     const [token, setToken] = useRecoilState(tokenState)
     const [receivedPlaylists, setReceivedPlaylists] = useState(true);
-    const [userPlaylists, setUserPlaylists] = useRecoilState(userPlaylistsState)
+    const [userPlaylists, setUserPlaylists] = useState([])
 
     useEffect(() => {
         // Use a Promise to wait for the token to exist

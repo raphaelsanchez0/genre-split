@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 //0import { useLocation, useParams } from "react-router-dom"
 import { getPlaylistInfo, getArtistGenre, getLikedTracks } from '../assets/api'
 import { useRecoilState } from 'recoil'
-import { tokenState, genresWithTracksState, userIdState, userPlaylistsState } from "../assets/atoms"
+import { tokenState, genresWithTracksState } from "../assets/atoms"
 import Playlist from "./Playlist"
 import Track from "../assets/Track";
 import GenrePlaylistButton from "./GenrePlaylistButton"
@@ -13,11 +13,10 @@ import noImage from '../assets/img/no-image.svg'
 export default function PlaylistSplitter() {
     const [token, setToken] = useRecoilState(tokenState)
     const { id } = useParams()
-
+    const [playlistInfo, setPlaylistInfo] = useState([])
     const [simpleTracks, setSimpleTracks] = useState([])
     const [genreCounter, setGenreCounter] = useState({})
 
-    const [playlistInfo, setPlaylistInfo] = useState([])
     const [genresWithTracks, setGenresWithTracks] = useRecoilState(genresWithTracksState)
 
     const [pathname, setPathname] = useState("")

@@ -137,24 +137,14 @@ export async function createPlaylist(token, name, userId) {
     return (response.data)
 
   } catch (err) {
-    console.error(err)
+    console.log
   }
 }
 
 
 
-export async function addToPlaylist(token, playlistId, uris) {
-  const url = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`
-  const headers = {
-    'Authorization': `Bearer ${token}`
-  }
-  const requestBody = { 'uris': uris }
-  try {
-    const response = await axios.post(url, requestBody, { headers })
-    return response.data
-  } catch (err) {
-    console.error(err)
-  }
+export async function addToPlaylist(token, playlistId, playlistObject) {
+
 }
 
 export function convertToSpotifyURI(trackId) {
@@ -169,4 +159,3 @@ export function createArrayOfFormatedSpotifyURIs(arrayOfTracks) {
   });
   return URIs
 }
-
