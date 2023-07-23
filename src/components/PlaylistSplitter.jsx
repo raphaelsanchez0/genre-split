@@ -17,6 +17,8 @@ export default function PlaylistSplitter() {
     const [simpleTracks, setSimpleTracks] = useState([])
     const [genreCounter, setGenreCounter] = useState({})
 
+    const [isLoading, setIsLoading] = useState(true);
+
     const [genresWithTracks, setGenresWithTracks] = useRecoilState(genresWithTracksState)
 
     const [pathname, setPathname] = useState("")
@@ -37,6 +39,10 @@ export default function PlaylistSplitter() {
 
     //cuts playlistInfo down into an array of tracks, with only whats needed
     function formatTracks(playlistInfo) {
+        if (!playlistInfo.tracks) {
+            console.log('No tracks found in playlist info.');
+            return [];
+        }
 
         const tracks = playlistInfo.tracks.items
         //onlytracks contains the tracks with all of their addtional details
@@ -138,15 +144,36 @@ export default function PlaylistSplitter() {
         getTokenPromise.then(async () => {
             try {
 
+                // let playlistData;
+                // if (location.pathname === "/splitter/me") {
+                //     playlistData = await getLikedTracks(token);
+                // } else {
+                //     playlistData = await getPlaylistInfo(token, id);
+
+                // }
+                // setPlaylistInfo(playlistData)
+
+
+                let playlistData;
                 if (location.pathname === "/splitter/me") {
-                    const playlistInfo = await getLikedTracks(token)
+                    playlistData = await getLikedTracks(token);
+                    console.log('Liked tracks data:', playlistData);
                 } else {
-                    const playlistInfo = await getPlaylistInfo(token, id)
+                    console.log('ID value:', id); // log id value
+                    playlistData = await getPlaylistInfo(token, id);
+                    console.log('Playlist info:', playlistData); // log function output
+
                 }
+                setPlaylistInfo(playlistData)
 
-                console.log(playlistInfo)
 
-                setPlaylistInfo(playlistInfo);
+                //
+                // const playlistInfo = await getPlaylistInfo(token, id)
+                // setPlaylistInfo(playlistInfo);
+
+
+
+
 
                 //formats tracks
                 const formattedTracks = await formatTracks(playlistInfo)
@@ -168,8 +195,12 @@ export default function PlaylistSplitter() {
             } catch (error) {
                 console.log(error)
             }
+            setIsLoading(false)
         });
     }, [token])
+
+
+
 
     const handleCreatingPlaylists = () => {
         console.log("Test")
@@ -211,6 +242,7 @@ export default function PlaylistSplitter() {
 
 
     return (
+
         <div className="playlist-splitter">
 
             {Object.keys(playlistInfo).length > 0 ?
