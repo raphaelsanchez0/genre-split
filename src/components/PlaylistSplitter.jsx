@@ -134,70 +134,96 @@ export default function PlaylistSplitter() {
     useEffect(() => {
 
         // Use a Promise to wait for the token to exist
-        const getTokenPromise = new Promise(resolve => {
-            if (token) {
-                resolve();
+
+
+        // let playlistData;
+        // if (location.pathname === "/splitter/me") {
+        //     playlistData = await getLikedTracks(token);
+        // } else {
+        //     playlistData = await getPlaylistInfo(token, id);
+
+        // }
+        // setPlaylistInfo(playlistData)
+
+        const fetchData = async () => {
+            let playlistData;
+            if (location.pathname === "/splitter/me") {
+                playlistData = await getLikedTracks(token);
+                console.log('Liked tracks data:', playlistData);
+            } else {
+                console.log('ID value:', id); // log id value
+                playlistData = await getPlaylistInfo(token, id);
+                console.log('Playlist info:', playlistData); // log function output
+
+
             }
-        });
+            setPlaylistInfo(playlistData)
+        }
 
-        // Only make the API request once the token exists
-        getTokenPromise.then(async () => {
-            try {
-
-                // let playlistData;
-                // if (location.pathname === "/splitter/me") {
-                //     playlistData = await getLikedTracks(token);
-                // } else {
-                //     playlistData = await getPlaylistInfo(token, id);
-
-                // }
-                // setPlaylistInfo(playlistData)
+        if (token) {
+            fetchData()
+            console.log("data fetched")
+            console.log(playlistInfo)
+        }
 
 
-                let playlistData;
-                if (location.pathname === "/splitter/me") {
-                    playlistData = await getLikedTracks(token);
-                    console.log('Liked tracks data:', playlistData);
-                } else {
-                    console.log('ID value:', id); // log id value
-                    playlistData = await getPlaylistInfo(token, id);
-                    console.log('Playlist info:', playlistData); // log function output
-
-                }
-                setPlaylistInfo(playlistData)
 
 
-                //
-                // const playlistInfo = await getPlaylistInfo(token, id)
-                // setPlaylistInfo(playlistInfo);
+        //
+        // const playlistInfo = await getPlaylistInfo(token, id)
+        // setPlaylistInfo(playlistInfo);
 
 
 
 
 
-                //formats tracks
-                const formattedTracks = await formatTracks(playlistInfo)
-                //adds genres
-                const formatedTrackWithGenres = await addGenres(formattedTracks)
-                //finds out how many songs are associated with genres
-                const genreCounterWithOutliars = getGenreCount(formatedTrackWithGenres)
-                //removes outliars
-                const genreCounterWithNoOutliars = eliminateOutliars(genreCounterWithOutliars)
-                //sorts genreCounter in decending order
-                const sortedGenreCount = sortJSON(genreCounterWithNoOutliars)
+        // //formats tracks
+        // const formattedTracks = await formatTracks(playlistInfo)
+        // //adds genres
+        // const formatedTrackWithGenres = await addGenres(formattedTracks)
+        // //finds out how many songs are associated with genres
+        // const genreCounterWithOutliars = getGenreCount(formatedTrackWithGenres)
+        // //removes outliars
+        // const genreCounterWithNoOutliars = eliminateOutliars(genreCounterWithOutliars)
+        // //sorts genreCounter in decending order
+        // const sortedGenreCount = sortJSON(genreCounterWithNoOutliars)
 
 
-                //2d array of genre counter w/ 
-                const genresWithTracks = addSongsToGenreCount(formatedTrackWithGenres, sortedGenreCount)
+        // //2d array of genre counter w/ 
+        // const genresWithTracks = addSongsToGenreCount(formatedTrackWithGenres, sortedGenreCount)
 
-                console.log(genresWithTracks)
-                setGenresWithTracks(genresWithTracks)
-            } catch (error) {
-                console.log(error)
-            }
+        // console.log(genresWithTracks)
+        // setGenresWithTracks(genresWithTracks)
+
+        setIsLoading(false)
+
+    }, [token, id, location.pathname])
+
+    useEffect(() => {
+        const manipulateData = async () => {
+            //formats tracks
+            const formattedTracks = formatTracks(playlistInfo)
+            //adds genres
+            const formatedTrackWithGenres = await addGenres(formattedTracks)
+            //finds out how many songs are associated with genres
+            const genreCounterWithOutliars = getGenreCount(formatedTrackWithGenres)
+            //removes outliars
+            const genreCounterWithNoOutliars = eliminateOutliars(genreCounterWithOutliars)
+            //sorts genreCounter in decending order
+            const sortedGenreCount = sortJSON(genreCounterWithNoOutliars)
+
+            //2d array of genre counter w/ 
+            const genresWithTracks = addSongsToGenreCount(formatedTrackWithGenres, sortedGenreCount)
+
+            console.log("manipulation complete")
+            setGenresWithTracks(genresWithTracks)
             setIsLoading(false)
-        });
-    }, [token])
+        }
+
+        if (playlistInfo) {
+            manipulateData();
+        }
+    }, [playlistInfo])
 
 
 
