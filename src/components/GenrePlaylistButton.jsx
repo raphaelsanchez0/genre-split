@@ -20,7 +20,7 @@ export default function GenrePlaylistButton(props) {
 
 
 
-            >{props.genre}</button>
+            >{props.genre}<div className="song-count">{props.songCount} Tracks </div></button>
         </div>
 
     )

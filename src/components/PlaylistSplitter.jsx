@@ -139,10 +139,7 @@ export default function PlaylistSplitter() {
             if (location.pathname === "/splitter/me") { //if accessing liked songs
                 getLikedTracks(token)
                     .then(response => {
-                        if (!response) {
-                            console.log('No response from getLikedTracks');
-                            return;
-                        }
+
                         playlistData = {
                             tracks: {
                                 items: response
@@ -150,7 +147,7 @@ export default function PlaylistSplitter() {
                             images: [{ url: heart }],
                             name: "Liked Songs"
                         }
-                        console.log("playlistData:", playlistData)
+
                         setPlaylistInfo(playlistData)
                     })
                     .catch(error => {
@@ -159,12 +156,9 @@ export default function PlaylistSplitter() {
             } else {
                 getPlaylistInfo(token, id)
                     .then(response => {
-                        if (!response) {
-                            console.log('No response from getPlaylistInfo');
-                            return;
-                        }
+
                         playlistData = response;
-                        console.log("playlistData:", playlistData)
+
                         setPlaylistInfo(playlistData)
                     })
                     .catch(error => {
@@ -172,60 +166,13 @@ export default function PlaylistSplitter() {
                     });
             }
 
-            console.log("likedtest:", playlistData)
-
-
-            // if (setSplittingLikedSongs) {
-
-            //     const formatedLikedSongs = {
-            //         track: {
-            //             items: playlistInfo
-            //         },
-            //         images: [heart]
-            //     }
-            //     setPlaylistInfo(formatedLikedSongs)
-
-            // }
-
 
         }
 
         if (token) {
             fetchData()
-            console.log("data fetched")
-            console.log(playlistInfo)
+
         }
-
-
-
-
-        //
-        // const playlistInfo = await getPlaylistInfo(token, id)
-        // setPlaylistInfo(playlistInfo);
-
-
-
-
-
-        // //formats tracks
-        // const formattedTracks = await formatTracks(playlistInfo)
-        // //adds genres
-        // const formatedTrackWithGenres = await addGenres(formattedTracks)
-        // //finds out how many songs are associated with genres
-        // const genreCounterWithOutliars = getGenreCount(formatedTrackWithGenres)
-        // //removes outliars
-        // const genreCounterWithNoOutliars = eliminateOutliars(genreCounterWithOutliars)
-        // //sorts genreCounter in decending order
-        // const sortedGenreCount = sortJSON(genreCounterWithNoOutliars)
-
-
-        // //2d array of genre counter w/ 
-        // const genresWithTracks = addSongsToGenreCount(formatedTrackWithGenres, sortedGenreCount)
-
-        // console.log(genresWithTracks)
-        // setGenresWithTracks(genresWithTracks)
-
-
 
     }, [token, id, location.pathname])
 
@@ -235,8 +182,6 @@ export default function PlaylistSplitter() {
 
             formattedTracks = formatTracks(playlistInfo)
 
-            //formats tracks
-            //const formattedTracks = formatTracks(playlistInfo)
             //adds genres
             const formatedTrackWithGenres = await addGenres(formattedTracks)
             //finds out how many songs are associated with genres
@@ -251,40 +196,18 @@ export default function PlaylistSplitter() {
 
 
             setGenresWithTracks(genresWithTracks)
+            console.log(genresWithTracks)
             setIsLoading(false)
 
 
         }
 
-        // const formatLikedSongs = () => {
-        //     const formatedLikedSongs = {
-        //         track: {
-        //             items: playlistInfo
-        //         },
-        //         images: [heart]
-        //     }
-        //     return formatedLikedSongs
-        // }
         if (Object.keys(playlistInfo).length !== 0) {
             manipulateData()
             console.log("manipulation complete")
         }
 
-        // if (playlistInfo) {
-        //     if (splittingLikedSongs) {
-        //         formatLikedSongs("formatedlikedsongs:", playlistInfo)
-        //         console.log()
-        //     }
-        //     manipulateData();
-        // }
-
-
-
-
     }, [playlistInfo])
-
-
-
 
 
     const toggleButtonState = (genre) => {
@@ -297,6 +220,7 @@ export default function PlaylistSplitter() {
             if (entry[0] === genre) {
                 // If it matches, return a new array with the same genre and count, but with the toggled value for selected
                 return [entry[0], entry[1], entry[2], !entry[3]];
+                // [0]->genre,[1]->song count,[2]->[{songs}], [3]-> isSelected
             } else {
                 // If it doesn't match, return the entry unchanged
                 return entry;
@@ -310,14 +234,9 @@ export default function PlaylistSplitter() {
             genre={genreWithTracks[0]}
             toggleState={() => toggleButtonState(genreWithTracks[0])}
             selected={genreWithTracks[3]} // Pass the selected state to GenrePlaylistButton
+            songCount={genreWithTracks[1]}
         />
     })
-
-
-
-
-
-
 
     return (
         isLoading ? (<div>Loading...</div>) :
@@ -347,8 +266,6 @@ export default function PlaylistSplitter() {
                     <div className="genre-playlists-buttons">
 
                         {genrePlaylists}
-
-
 
                     </div>
                     <div className="split-container">

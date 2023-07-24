@@ -211,5 +211,10 @@ nav {
         font-size: 20px;
         border-radius: 7.5px;
 
+        .song-count {
+            overflow-wrap: break-word;
+            font-size: 10px;
+        }
     }
+
 }
