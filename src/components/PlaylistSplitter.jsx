@@ -147,7 +147,7 @@ export default function PlaylistSplitter() {
                             tracks: {
                                 items: response
                             },
-                            images: [heart],
+                            images: [{ url: heart }],
                             name: "Liked Songs"
                         }
                         console.log("playlistData:", playlistData)
@@ -251,6 +251,8 @@ export default function PlaylistSplitter() {
 
 
             setGenresWithTracks(genresWithTracks)
+            setIsLoading(false)
+
 
         }
 
@@ -278,7 +280,7 @@ export default function PlaylistSplitter() {
 
 
 
-        setIsLoading(false)
+
     }, [playlistInfo])
 
 
@@ -318,8 +320,8 @@ export default function PlaylistSplitter() {
 
 
     return (
-        isLoading ? <div>Loading...</div> :
-            <div className="playlist-splitter">
+        isLoading ? (<div>Loading...</div>) :
+            (<div className="playlist-splitter">
 
                 {playlistInfo && Object.keys(playlistInfo).length > 0 ?
                     <div className="playlist-info">
@@ -360,6 +362,7 @@ export default function PlaylistSplitter() {
                 </div>
 
 
-            </div>
+            </div>)
+
     )
 }
