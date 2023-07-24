@@ -8,20 +8,19 @@ import Track from "../assets/Track";
 import GenrePlaylistButton from "./GenrePlaylistButton"
 import { Link, Route, Routes, useLocation, useParams } from 'react-router-dom'
 import noImage from '../assets/img/no-image.svg'
+import heart from '../assets/img/heart.png'
 
 
 export default function PlaylistSplitter() {
     const [token, setToken] = useRecoilState(tokenState)
     const { id } = useParams()
-    const [playlistInfo, setPlaylistInfo] = useState([])
-    const [simpleTracks, setSimpleTracks] = useState([])
-    const [genreCounter, setGenreCounter] = useState({})
-
+    const [playlistInfo, setPlaylistInfo] = useState({})
+    const [genresWithTracks, setGenresWithTracks] = useRecoilState(genresWithTracksState)
     const [isLoading, setIsLoading] = useState(true);
 
-    const [genresWithTracks, setGenresWithTracks] = useRecoilState(genresWithTracksState)
+    const [splittingLikedSongs, setSplittingLikedSongs] = useState(false)
 
-    const [pathname, setPathname] = useState("")
+
 
     const location = useLocation()
 
@@ -133,31 +132,62 @@ export default function PlaylistSplitter() {
 
     useEffect(() => {
 
-        // Use a Promise to wait for the token to exist
 
-
-        // let playlistData;
-        // if (location.pathname === "/splitter/me") {
-        //     playlistData = await getLikedTracks(token);
-        // } else {
-        //     playlistData = await getPlaylistInfo(token, id);
-
-        // }
-        // setPlaylistInfo(playlistData)
 
         const fetchData = async () => {
             let playlistData;
-            if (location.pathname === "/splitter/me") {
-                playlistData = await getLikedTracks(token);
-                console.log('Liked tracks data:', playlistData);
+            if (location.pathname === "/splitter/me") { //if accessing liked songs
+                getLikedTracks(token)
+                    .then(response => {
+                        if (!response) {
+                            console.log('No response from getLikedTracks');
+                            return;
+                        }
+                        playlistData = {
+                            tracks: {
+                                items: response
+                            },
+                            images: [heart],
+                            name: "Liked Songs"
+                        }
+                        console.log("playlistData:", playlistData)
+                        setPlaylistInfo(playlistData)
+                    })
+                    .catch(error => {
+                        console.error('Error getting liked tracks:', error);
+                    });
             } else {
-                console.log('ID value:', id); // log id value
-                playlistData = await getPlaylistInfo(token, id);
-                console.log('Playlist info:', playlistData); // log function output
-
-
+                getPlaylistInfo(token, id)
+                    .then(response => {
+                        if (!response) {
+                            console.log('No response from getPlaylistInfo');
+                            return;
+                        }
+                        playlistData = response;
+                        console.log("playlistData:", playlistData)
+                        setPlaylistInfo(playlistData)
+                    })
+                    .catch(error => {
+                        console.error('Error getting playlist info:', error);
+                    });
             }
-            setPlaylistInfo(playlistData)
+
+            console.log("likedtest:", playlistData)
+
+
+            // if (setSplittingLikedSongs) {
+
+            //     const formatedLikedSongs = {
+            //         track: {
+            //             items: playlistInfo
+            //         },
+            //         images: [heart]
+            //     }
+            //     setPlaylistInfo(formatedLikedSongs)
+
+            // }
+
+
         }
 
         if (token) {
@@ -195,14 +225,18 @@ export default function PlaylistSplitter() {
         // console.log(genresWithTracks)
         // setGenresWithTracks(genresWithTracks)
 
-        setIsLoading(false)
+
 
     }, [token, id, location.pathname])
 
     useEffect(() => {
+        let formattedTracks
         const manipulateData = async () => {
+
+            formattedTracks = formatTracks(playlistInfo)
+
             //formats tracks
-            const formattedTracks = formatTracks(playlistInfo)
+            //const formattedTracks = formatTracks(playlistInfo)
             //adds genres
             const formatedTrackWithGenres = await addGenres(formattedTracks)
             //finds out how many songs are associated with genres
@@ -215,22 +249,38 @@ export default function PlaylistSplitter() {
             //2d array of genre counter w/ 
             const genresWithTracks = addSongsToGenreCount(formatedTrackWithGenres, sortedGenreCount)
 
-            console.log("manipulation complete")
+
             setGenresWithTracks(genresWithTracks)
-            setIsLoading(false)
+
         }
 
-        if (playlistInfo) {
-            manipulateData();
+        // const formatLikedSongs = () => {
+        //     const formatedLikedSongs = {
+        //         track: {
+        //             items: playlistInfo
+        //         },
+        //         images: [heart]
+        //     }
+        //     return formatedLikedSongs
+        // }
+        if (Object.keys(playlistInfo).length !== 0) {
+            manipulateData()
+            console.log("manipulation complete")
         }
+
+        // if (playlistInfo) {
+        //     if (splittingLikedSongs) {
+        //         formatLikedSongs("formatedlikedsongs:", playlistInfo)
+        //         console.log()
+        //     }
+        //     manipulateData();
+        // }
+
+
+
+        setIsLoading(false)
     }, [playlistInfo])
 
-
-
-
-    const handleCreatingPlaylists = () => {
-        console.log("Test")
-    }
 
 
 
@@ -268,48 +318,48 @@ export default function PlaylistSplitter() {
 
 
     return (
+        isLoading ? <div>Loading...</div> :
+            <div className="playlist-splitter">
 
-        <div className="playlist-splitter">
+                {playlistInfo && Object.keys(playlistInfo).length > 0 ?
+                    <div className="playlist-info">
+                        {playlistInfo.images[0] ? (
+                            <img src={playlistInfo.images[0].url} />
+                        ) : (
+                            <img src={noImage} />
+                        )}
+                        <div className="text-stats">
+                            <h1 className="name">{playlistInfo.name}</h1>
+                            {playlistInfo.followers?.total &&
+                                <h3 className="followers">{`${playlistInfo.followers.total} likes`}</h3>
+                            }
+                        </div>
 
-            {Object.keys(playlistInfo).length > 0 ?
-                <div className="playlist-info">
-                    {playlistInfo.images[0] ? (
-                        <img src={playlistInfo.images[0].url} />
-                    ) : (
-                        <img src={noImage} />
-                    )}
-                    <div className="text-stats">
-                        <h1 className="name">{playlistInfo.name}</h1>
-                        <h3 className="followers">{`${playlistInfo.followers.total} likes`}</h3>
+
+                    </div> : <></>
+
+                }
+                <h1>Select the playlists you want to make</h1>
+
+                <div className="buttons">
+                    <div className="genre-playlists-buttons">
+
+                        {genrePlaylists}
+
+
 
                     </div>
-
-
-                </div> : <></>
-
-            }
-            <h1>Select the playlists you want to make</h1>
-            {/* <h1>{id}</h1>
-            <h1>{location.pathname}</h1> */}
-            <div className="buttons">
-                <div className="genre-playlists-buttons">
-
-                    {genrePlaylists}
-
-
+                    <div className="split-container">
+                        <Link to={`/creator`}>
+                            <button className="split"
+                                onClick={() => handleCreatingPlaylists()}
+                            >Create Playlists</button>
+                        </Link>
+                    </div>
 
                 </div>
-                <div className="split-container">
-                    <Link to={`/creator`}>
-                        <button className="split"
-                            onClick={() => handleCreatingPlaylists()}
-                        >Create Playlists</button>
-                    </Link>
-                </div>
+
 
             </div>
-
-
-        </div>
     )
 }
