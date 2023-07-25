@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { errorSelector, useRecoilState } from 'recoil'
-import { tokenState, genresWithTracksState } from "../assets/atoms"
-import { getUserId, createPlaylist, createArrayOfFormatedSpotifyURIs, convertToSpotifyURI } from "../assets/api";
+import { tokenState, genresWithTracksState, userIdState } from "../assets/atoms"
+import { getUserId, createPlaylist, createArrayOfFormatedSpotifyURIs, convertToSpotifyURI, addToPlaylist } from "../assets/api";
 
 export default function PlaylistCreator() {
     const [token, setToken] = useRecoilState(tokenState)
     const [genresWithTracks, setGenresWithTracks] = useRecoilState(genresWithTracksState)
-    const [userId, setUserId] = useState("")
+    const [userId, setUserId] = useRecoilState(userIdState)
     const [currentPlaylistId, setCurrentPlaylistId] = useState("")
 
-    const [userPlaylists, setUserPlaylists] = useRecoilState(userPlaylistsState)
+    //const [userPlaylists, setUserPlaylists] = useRecoilState(userPlaylistsState)
 
 
 
     useEffect(() => {
-        console.log(userPlaylists, "userplaylist");
+        //console.log(userPlaylists, "userplaylist");
 
 
 
@@ -29,6 +29,7 @@ export default function PlaylistCreator() {
 
 
                             const playlistData = await createPlaylist(token, genre[0], userId);
+                            console.log(playlistData)
                             // creates a new playlist for the genre
                             const playlistId = playlistData.id;
                             const tracksInGenre = genre[2];

@@ -271,7 +271,7 @@ export default function PlaylistSplitter() {
                     <div className="split-container">
                         <Link to={`/creator`}>
                             <button className="split"
-                                onClick={() => handleCreatingPlaylists()}
+
                             >Create Playlists</button>
                         </Link>
                     </div>

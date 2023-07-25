@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useRecoilState } from 'recoil'
-import { topArtistsState, likedSongsState, tokenState } from '../assets/atoms'
-import { getTopItems, getLikedTracks } from '../assets/api'
+import { topArtistsState, likedSongsState, tokenState, userIdState } from '../assets/atoms'
+import { getTopItems, getLikedTracks, getUserId } from '../assets/api'
 
 
 export default function Login() {
@@ -10,6 +10,7 @@ export default function Login() {
   const [token, setToken] = useRecoilState(tokenState)
   const [topArtists, setTopArtists] = useRecoilState(topArtistsState);
   const [likedSongs, setLikedSongs] = useRecoilState(likedSongsState)
+  const [userId, setUserId] = useRecoilState(userIdState)
 
 
   const CLIENT_ID = "420d2cfc497641c4965d36181d8c04a9"
@@ -50,8 +51,11 @@ export default function Login() {
     // Only make the API request once the token exists
     getTokenPromise.then(async () => {
       try {
-        const likedTracks = await getLikedTracks(token)
-        setLikedSongs(likedTracks);
+        // const likedTracks = await getLikedTracks(token)
+        // setLikedSongs(likedTracks);
+        const userId = await getUserId(token)
+        setUserId(userId)
+
 
       } catch (error) {
         console.log(error)
