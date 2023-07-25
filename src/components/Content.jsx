@@ -9,7 +9,8 @@ import noImage from '../assets/img/no-image.svg'
 
 import Playlist from "./Playlist";
 import Playlists from "./Playlists";
-import { Route, Routes, useLocation } from "react-router-dom";
+import LoginPage from "./LoginPage"
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import PlaylistSplitter from "./PlaylistSplitter";
 import PlaylistCreator from "./PlaylistCreator";
 
@@ -18,10 +19,17 @@ export default function Content() {
     const [receivedPlaylists, setReceivedPlaylists] = useState(true);
     const [userPlaylists, setUserPlaylists] = useRecoilState(userPlaylistsState)
     const location = useLocation();
+    const navigate = useNavigate()
 
     const backgroundColor = location.pathname === "/creator" ? "white" : "";
 
     useEffect(() => {
+        if (!token) {
+            navigate('/login')
+        } else {
+            navigate(`/`)
+        }
+
         // Use a Promise to wait for the token to exist
         const getTokenPromise = new Promise(resolve => {
             if (token) {
@@ -59,10 +67,12 @@ export default function Content() {
         <div className="content" style={{ backgroundColor: backgroundColor }}>
 
             <Routes>
+                <Route path="/login" element={<LoginPage />} />
                 <Route path="/" element={<Playlists playlists={playlists} />} />
                 <Route path="/splitter/:id" element={<PlaylistSplitter />} />
                 <Route path="/splitter/me" element={<PlaylistSplitter />} />
                 <Route path="/creator/" element={<PlaylistCreator />} />
+
             </Routes>
 
         </div>

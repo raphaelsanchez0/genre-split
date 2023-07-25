@@ -2,6 +2,8 @@ $base-color: #8ACB88;
 $offset-base-color: #68cf65;
 
 
+
+
 * {
     font-family: Inter, sans-serif;
     margin: 0;
@@ -13,6 +15,20 @@ button {
 
 }
 
+@mixin login-button {
+    margin: 0;
+    border: none;
+    color: white;
+    background: $base-color;
+    font-weight: bold;
+    padding: 5px;
+}
+
+@mixin center-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 
 
@@ -32,12 +48,7 @@ nav {
 
     .login {
 
-        margin: 0;
-        border: none;
-        color: white;
-        background: $base-color;
-        font-weight: bold;
-        padding: 5px;
+        @include login-button()
     }
 
 
@@ -136,6 +147,8 @@ nav {
                 background-color: $offset-base-color;
             }
         }
+
+
     }
 
     .created-playlist-messages {
@@ -159,7 +172,27 @@ nav {
             padding: 5px;
         }
 
+
+
     }
+
+    .login-page {
+        margin: 10px;
+
+        .login {
+            height: 5rem;
+            width: 10rem;
+            font-size: 20px;
+            @include login-button()
+        }
+
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+
+
 
 }
 

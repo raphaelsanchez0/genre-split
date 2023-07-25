@@ -62,9 +62,9 @@ export default function Login() {
       }
     });
 
-    if (token === "") {
+    console.log("token: ", token)
 
-    }
+
 
 
 
