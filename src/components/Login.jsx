@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useRecoilState } from 'recoil'
-import { topArtistsState, tokenState, userIdState, userPlaylistsState } from '../assets/atoms'
+import { tokenState, userIdState, userPlaylistsState } from '../assets/atoms'
 import { getTopItems, getLikedTracks, getUserId } from '../assets/api'
 
 
