@@ -2,21 +2,24 @@ import { useState, useEffect } from "react";
 
 import { useRecoilState } from 'recoil'
 import heart from '../assets/img/heart.png'
-import { numOfItems, itemType, tokenState } from '../assets/atoms'
+import { numOfItems, itemType, tokenState, userPlaylistsState } from '../assets/atoms'
 import { getUserPlaylists } from "../assets/api";
 import noImage from '../assets/img/no-image.svg'
 
 
 import Playlist from "./Playlist";
 import Playlists from "./Playlists";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import PlaylistSplitter from "./PlaylistSplitter";
 import PlaylistCreator from "./PlaylistCreator";
 
 export default function Content() {
     const [token, setToken] = useRecoilState(tokenState)
     const [receivedPlaylists, setReceivedPlaylists] = useState(true);
-    const [userPlaylists, setUserPlaylists] = useState([])
+    const [userPlaylists, setUserPlaylists] = useRecoilState(userPlaylistsState)
+    const location = useLocation();
+
+    const backgroundColor = location.pathname === "/creator" ? "white" : "";
 
     useEffect(() => {
         // Use a Promise to wait for the token to exist
@@ -53,7 +56,7 @@ export default function Content() {
 
 
     return (
-        <div className="content">
+        <div className="content" style={{ backgroundColor: backgroundColor }}>
 
             <Routes>
                 <Route path="/" element={<Playlists playlists={playlists} />} />

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useRecoilState } from 'recoil'
-import { topArtistsState, likedSongsState, tokenState, userIdState } from '../assets/atoms'
+import { topArtistsState, likedSongsState, tokenState, userIdState, userPlaylistsState } from '../assets/atoms'
 import { getTopItems, getLikedTracks, getUserId } from '../assets/api'
 
 
@@ -11,6 +11,7 @@ export default function Login() {
   const [topArtists, setTopArtists] = useRecoilState(topArtistsState);
   const [likedSongs, setLikedSongs] = useRecoilState(likedSongsState)
   const [userId, setUserId] = useRecoilState(userIdState)
+  const [userPlaylists, setUserPlaylists] = useRecoilState(userPlaylistsState)
 
 
   const CLIENT_ID = "420d2cfc497641c4965d36181d8c04a9"
@@ -62,14 +63,19 @@ export default function Login() {
       }
     });
 
+    if (token === "") {
+
+    }
+
 
 
 
 
   }, [token])
 
-  const logout = () => {
+  const handleLogout = () => {
     setToken("")
+    setUserPlaylists([])
     window.localStorage.removeItem("token")
   }
 
@@ -92,7 +98,7 @@ export default function Login() {
           className="login"
           onClick={handleLogin}
         >Login</button>
-        : <button onClick={logout} className="login">Logout</button>}
+        : <button onClick={handleLogout} className="login">Logout</button>}
 
     </>
   )
