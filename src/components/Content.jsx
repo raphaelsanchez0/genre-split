@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { useRecoilState } from 'recoil'
 import heart from '../assets/img/heart.png'
-import { numOfItems, itemType, tokenState, userPlaylistsState } from '../assets/atoms'
+import { itemType, tokenState, userPlaylistsState } from '../assets/atoms'
 import { getUserPlaylists } from "../assets/api";
 import noImage from '../assets/img/no-image.svg'
 

@@ -249,11 +249,14 @@ export default function PlaylistSplitter() {
                         ) : (
                             <img src={noImage} />
                         )}
+
                         <div className="text-stats">
                             <h1 className="name">{playlistInfo.name}</h1>
-                            {playlistInfo.followers?.total &&
+                            {playlistInfo.followers?.total !== undefined && playlistInfo.followers.total > 0 ? (
                                 <h3 className="followers">{`${playlistInfo.followers.total} likes`}</h3>
-                            }
+                            ) : (
+                                <></>
+                            )}
                         </div>
 
 

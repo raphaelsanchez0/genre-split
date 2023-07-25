@@ -12,14 +12,14 @@ export default function PlaylistCreator() {
 
     const [createdPlaylists, setCreatedPlaylists] = useState([])
     const [mappingCount, setMappingCount] = useState(0)
-    //const [userPlaylists, setUserPlaylists] = useRecoilState(userPlaylistsState)
+
 
     const [finishedCreating, setFinishedCreating] = useState(false)
 
 
 
     useEffect(() => {
-        //console.log(userPlaylists, "userplaylist");
+
 
 
         (async () => {

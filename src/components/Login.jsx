@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useRecoilState } from 'recoil'
-import { topArtistsState, likedSongsState, tokenState, userIdState, userPlaylistsState } from '../assets/atoms'
+import { topArtistsState, tokenState, userIdState, userPlaylistsState } from '../assets/atoms'
 import { getTopItems, getLikedTracks, getUserId } from '../assets/api'
 
 
 export default function Login() {
   //const [token, setToken] = useState("")
   const [token, setToken] = useRecoilState(tokenState)
-  const [topArtists, setTopArtists] = useRecoilState(topArtistsState);
-  const [likedSongs, setLikedSongs] = useRecoilState(likedSongsState)
+
   const [userId, setUserId] = useRecoilState(userIdState)
   const [userPlaylists, setUserPlaylists] = useRecoilState(userPlaylistsState)
 
