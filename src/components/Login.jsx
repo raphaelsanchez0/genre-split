@@ -2,38 +2,22 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useRecoilState } from 'recoil'
 import { tokenState, userIdState, userPlaylistsState } from '../assets/atoms'
-import { getTopItems, getLikedTracks, getUserId } from '../assets/api'
+import { getUserId } from '../assets/api'
 
 
 export default function Login() {
-  //const [token, setToken] = useState("")
   const [token, setToken] = useRecoilState(tokenState)
 
   const [userId, setUserId] = useRecoilState(userIdState)
   const [userPlaylists, setUserPlaylists] = useRecoilState(userPlaylistsState)
 
 
-  const CLIENT_ID = "420d2cfc497641c4965d36181d8c04a9"
-  const REDIRECT_URI = "http://localhost:5173"
+  const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
+  const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "token"
-  const SCOPE = 'playlist-modify-public playlist-read-private playlist-modify-private user-top-read user-library-read user-read-private user-read-email playlist-read playlist-read-collaborative'
+  const SCOPE = 'playlist-modify-public playlist-read-private user-library-read user-read-private user-read-email playlist-read-collaborative'
 
-  //checks for token in local storage and sets token's state to that token if so
-  // useEffect(() => {
-  //   const hash = window.location.hash
-  //   let token = window.localStorage.getItem("token")
-
-  //   if (!token && hash) {
-  //     token = hash.substring(1).split("&").find(elem => elem.startsWith("access_token")).split("=")[1]
-
-  //     // window.location.hash = ""
-  //     // window.localStorage.setItem("token", token)
-  //   }
-
-  //   setToken(token)
-
-  // }, [])
   useEffect(() => {
     const hash = window.location.hash;
     let newToken = null;
@@ -69,16 +53,6 @@ export default function Login() {
       });
     }
 
-
-
-    console.log("token: ", token)
-
-
-
-
-
-
-
   }, [token])
 
   const handleLogout = () => {
@@ -94,9 +68,6 @@ export default function Login() {
     const scopes = SCOPE.replace(' ', '%20');
     window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${scopes}&show_dialog=${true}`
   }
-
-
-
 
 
   return (
