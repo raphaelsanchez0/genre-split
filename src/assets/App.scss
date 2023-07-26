@@ -256,10 +256,13 @@ nav {
         gap: 10px;
 
         display: grid;
-        display: grid;
         justify-items: center;
         /* for horizontal alignment */
         align-items: center;
+
+        .created-playlist-message-link {
+            width: 90%;
+        }
 
 
         .created-playlist-message {
