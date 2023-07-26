@@ -16,9 +16,9 @@ export default function Playlist(props) {
 
     return (
         <div className="playlist">
-            <img src={props.coverImage} className='heart' />
+            <img src={props.coverImage} className='cover-image' />
             <div className='text'>
-                <h2>{props.title}</h2>
+                <h2 className='playlist-name'>{props.title}</h2>
                 {renderSongsStat}
             </div>
             {!isInSplitter ?
