@@ -21,7 +21,7 @@ export default function Content() {
     const location = useLocation();
     const navigate = useNavigate()
 
-    const backgroundColor = location.pathname === "/creator" ? "white" : "";
+    const backgroundColor = location.pathname === "/creator" || location.pathname === "/login" ? "white" : "";
 
     useEffect(() => {
         if (!token) {
