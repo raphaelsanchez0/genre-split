@@ -20,20 +20,30 @@ export default function Login() {
   const SCOPE = 'playlist-modify-public playlist-read-private playlist-modify-private user-top-read user-library-read user-read-private user-read-email playlist-read playlist-read-collaborative'
 
   //checks for token in local storage and sets token's state to that token if so
+  // useEffect(() => {
+  //   const hash = window.location.hash
+  //   let token = window.localStorage.getItem("token")
+
+  //   if (!token && hash) {
+  //     token = hash.substring(1).split("&").find(elem => elem.startsWith("access_token")).split("=")[1]
+
+  //     // window.location.hash = ""
+  //     // window.localStorage.setItem("token", token)
+  //   }
+
+  //   setToken(token)
+
+  // }, [])
   useEffect(() => {
-    const hash = window.location.hash
-    let token = window.localStorage.getItem("token")
-
-    if (!token && hash) {
-      token = hash.substring(1).split("&").find(elem => elem.startsWith("access_token")).split("=")[1]
-
-      // window.location.hash = ""
-      // window.localStorage.setItem("token", token)
+    const hash = window.location.hash;
+    let newToken = null;
+    if (hash) {
+      newToken = hash.substring(1).split("&").find(elem => elem.startsWith("access_token")).split("=")[1];
+      window.location.hash = ""; // Clear the hash to prevent reusing the token if the user refreshes the page.
+      window.localStorage.setItem("token", newToken);
     }
-
-    setToken(token)
-
-  }, [])
+    setToken(newToken);
+  }, []);
 
 
   useEffect(() => {
@@ -72,10 +82,10 @@ export default function Login() {
   }, [token])
 
   const handleLogout = () => {
-    setToken("")
-    setUserPlaylists([])
+    setToken("");
+    setUserId(""); // Clear user ID as well, since it's associated with the token.
+    setUserPlaylists([]);
     window.localStorage.removeItem("token")
-
   }
 
 
@@ -84,6 +94,8 @@ export default function Login() {
     const scopes = SCOPE.replace(' ', '%20');
     window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${scopes}&show_dialog=${true}`
   }
+
+
 
 
 
