@@ -27,8 +27,8 @@ export default function Login() {
     if (!token && hash) {
       token = hash.substring(1).split("&").find(elem => elem.startsWith("access_token")).split("=")[1]
 
-      window.location.hash = ""
-      window.localStorage.setItem("token", token)
+      // window.location.hash = ""
+      // window.localStorage.setItem("token", token)
     }
 
     setToken(token)
@@ -37,30 +37,29 @@ export default function Login() {
 
 
   useEffect(() => {
-
-
-
-
     // Use a Promise to wait for the token to exist
     const getTokenPromise = new Promise(resolve => {
       if (token) {
         resolve();
       }
     });
+    if (token) {
+      // Only make the API request once the token exists
+      getTokenPromise.then(async () => {
+        try {
+          // const likedTracks = await getLikedTracks(token)
+          // setLikedSongs(likedTracks);
+          const userId = await getUserId(token)
+          setUserId(userId)
 
-    // Only make the API request once the token exists
-    getTokenPromise.then(async () => {
-      try {
-        // const likedTracks = await getLikedTracks(token)
-        // setLikedSongs(likedTracks);
-        const userId = await getUserId(token)
-        setUserId(userId)
+
+        } catch (error) {
+          console.log(error)
+        }
+      });
+    }
 
 
-      } catch (error) {
-        console.log(error)
-      }
-    });
 
     console.log("token: ", token)
 
@@ -76,13 +75,14 @@ export default function Login() {
     setToken("")
     setUserPlaylists([])
     window.localStorage.removeItem("token")
+
   }
 
 
   function handleLogin(e) {
     e.preventDefault();
     const scopes = SCOPE.replace(' ', '%20');
-    window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${scopes}`
+    window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${scopes}&show_dialog=${true}`
   }
 
 

@@ -24,7 +24,7 @@ export default function PlaylistSplitter() {
 
     const location = useLocation()
 
-
+    let artistCache = {}
 
 
 
@@ -63,11 +63,20 @@ export default function PlaylistSplitter() {
         return formatedTracks
     }
 
+
     async function addGenres(formattedTracks) {
         await Promise.all(
             formattedTracks.map(async track => {
-                const genres = await getArtistGenre(token, track.artistId);
-                track.setGenres(genres);
+                // Check if the artist is in the cache
+                if (artistCache[track.artistId]) {
+                    // If the artist is in the cache, use the cached genres
+                    track.setGenres(artistCache[track.artistId]);
+                } else {
+                    // If the artist is not in the cache, fetch the genres and store them in the cache
+                    const genres = await getArtistGenre(token, track.artistId);
+                    track.setGenres(genres);
+                    artistCache[track.artistId] = genres; // Store the genres in the cache
+                }
             })
         );
         return formattedTracks;
@@ -131,9 +140,6 @@ export default function PlaylistSplitter() {
 
 
     useEffect(() => {
-
-
-
         const fetchData = async () => {
             let playlistData;
             if (location.pathname === "/splitter/me") { //if accessing liked songs
