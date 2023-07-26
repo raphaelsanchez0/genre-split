@@ -17,6 +17,7 @@ export default function PlaylistSplitter() {
     const [playlistInfo, setPlaylistInfo] = useState({})
     const [genresWithTracks, setGenresWithTracks] = useRecoilState(genresWithTracksState)
     const [isLoading, setIsLoading] = useState(true);
+    const [isAnySelected, setIsAnySelected] = useState(false);
 
     const [splittingLikedSongs, setSplittingLikedSongs] = useState(false)
 
@@ -223,7 +224,7 @@ export default function PlaylistSplitter() {
 
     function handleChangingGenreArrayValue(genre) {
         // Map over the genresWithTracks array and for each entry check if the genre matches
-        setGenresWithTracks(genresWithTracks.map(entry => {
+        const newGenresWithTracks = genresWithTracks.map(entry => {
             if (entry[0] === genre) {
                 // If it matches, return a new array with the same genre and count, but with the toggled value for selected
                 return [entry[0], entry[1], entry[2], !entry[3]];
@@ -232,7 +233,13 @@ export default function PlaylistSplitter() {
                 // If it doesn't match, return the entry unchanged
                 return entry;
             }
-        }));
+        });
+
+        // Update genresWithTracks state
+        setGenresWithTracks(newGenresWithTracks);
+
+        // Check if any genre has been selected and update the isAnySelected state
+        setIsAnySelected(newGenresWithTracks.some(entry => entry[3]));
     }
 
 
@@ -270,7 +277,7 @@ export default function PlaylistSplitter() {
                     </div> : <></>
 
                 }
-                <h1>Select the playlists you want to make</h1>
+                <h1 className="playlist-instructions">Select the playlists you want to make</h1>
 
                 <div className="buttons">
                     <div className="genre-playlists-buttons">
@@ -279,9 +286,10 @@ export default function PlaylistSplitter() {
 
                     </div>
                     <div className="split-container">
-                        <Link to={`/creator`}>
+                        <Link to={`/creator`} >
                             <button className="split"
-
+                                disabled={!isAnySelected} // Disable the button if no genre has been selected
+                                style={{ backgroundColor: !isAnySelected ? 'grey' : '' }} // Change the color to grey if the button is disabled
                             >Create Playlists</button>
                         </Link>
                     </div>

@@ -269,6 +269,10 @@ nav {
             width: 25%;
             border-radius: 25px;
             padding: 5px;
+
+            @include mobile() {
+                width: 90%;
+            }
         }
 
 
@@ -289,10 +293,6 @@ nav {
         align-items: center;
         flex-direction: column;
     }
-
-
-
-
 }
 
 .playlist-info {
@@ -301,7 +301,11 @@ nav {
 
 
     img {
-        width: 15%;
+        max-width: 15%;
+
+        @include mobile() {
+            max-width: 30%;
+        }
     }
 
 
@@ -315,6 +319,10 @@ nav {
         .name {
             text-align: left;
             font-size: 56px;
+
+            @include mobile() {
+                font-size: 30px;
+            }
         }
 
         .followers {
@@ -326,17 +334,61 @@ nav {
 .playlist-splitter {
     padding: 2%;
 
+    @include mobile() {
+        padding: 0;
+    }
+
+    .playlist-instructions {
+        @include mobile() {
+            font-size: medium;
+        }
+    }
+
     .buttons {
         width: 100%;
         display: flex;
         flex-direction: row;
         gap: 20px;
 
+        @include mobile() {
+            flex-direction: column-reverse;
+
+        }
+
         .genre-playlists-buttons {
             flex: 3;
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
             gap: 10px;
+
+            @include mobile() {
+                grid-template-columns: 1fr 1fr;
+                gap: 3px;
+
+
+            }
+
+
+
+            button {
+                width: 100%;
+                height: 50px;
+
+                font-size: 20px;
+                border-radius: 7.5px;
+
+                @include mobile() {
+                    height: 70px;
+                }
+
+                .song-count {
+                    overflow-wrap: break-word;
+                    font-size: 10px;
+                }
+            }
+
+
+
         }
 
         .split-container {
@@ -345,12 +397,21 @@ nav {
             justify-content: center;
             align-items: center;
 
+            @include mobile() {
+                width: 100%;
+            }
+
             .split {
                 height: 35px;
                 width: 100px;
                 background-color: $base-color;
                 border-radius: 7.5px;
                 font-weight: bold;
+
+                @include mobile() {
+                    width: 100%;
+                }
+
             }
 
             .split:hover {
@@ -360,19 +421,4 @@ nav {
 
 
     }
-}
-
-.genre-playlists-buttons {
-    button {
-        width: 100%;
-        height: 50px;
-        font-size: 20px;
-        border-radius: 7.5px;
-
-        .song-count {
-            overflow-wrap: break-word;
-            font-size: 10px;
-        }
-    }
-
 }
