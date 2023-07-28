@@ -5,7 +5,7 @@ import { tokenState, userIdState, userPlaylistsState } from '../assets/atoms'
 import { getUserId } from '../assets/api'
 
 
-export default function Login() {
+export default function Login(props) {
   const [token, setToken] = useRecoilState(tokenState)
 
   const [userId, setUserId] = useRecoilState(userIdState)
@@ -79,7 +79,7 @@ export default function Login() {
         <button
           className="login"
           onClick={handleLogin}
-        >Login</button>
+        >{props.text}</button>
         : <button onClick={handleLogout} className="login">Logout</button>}
 
     </>
