@@ -14,6 +14,7 @@ $breakpoint-desktop: 1150px;
 
 body {
     overflow: hidden;
+    background: #223122;
 }
 
 button {
@@ -81,6 +82,50 @@ nav {
 .App {
     display: flex;
     flex-direction: column;
+
+}
+
+.landing {
+    margin: 2.5% 20% 2.5% 20%;
+    display: flex;
+
+
+    .text {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        h1 {
+            font-size: 100px;
+            font-weight: bold;
+            color: white;
+            padding: 0 0 2vh;
+        }
+
+        h3 {
+            color: $base-color;
+            font-size: 30px;
+            padding: 0 0 5vh;
+        }
+
+        .login-link {
+            align-self: center;
+
+            .login-button {
+
+                @include login-button();
+                color: black;
+                font-weight: bold;
+                font-size: 36px;
+                border-radius: 100px;
+                padding: 30px;
+            }
+        }
+    }
+
+    .hero-image {
+        flex: 1;
+    }
 
 }
 
