@@ -167,7 +167,7 @@ nav {
     overflow: auto;
     height: 80vh;
 
-    h1 {
+    .playlist-header {
         text-align: center;
 
 
@@ -523,7 +523,12 @@ nav {
         font-size: 12px;
     }
 
+
     .privacy-policy {
         margin-left: auto;
     }
+}
+
+.privacy {
+    margin: 2.5%;
 }
