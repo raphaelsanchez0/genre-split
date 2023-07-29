@@ -356,10 +356,6 @@ nav {
 
     .login-page {
         margin: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
 
         .title {
             font-size: 50px;
@@ -379,6 +375,9 @@ nav {
             @include login-alt()
         }
 
+        display: flex;
+        align-items: center;
+        flex-direction: column;
 
     }
 }
@@ -512,7 +511,7 @@ nav {
 }
 
 .footer {
-    margin: 0 20% 0 20%;
+    width: 60%;
 
     .text {
         display: flex;

@@ -14,6 +14,8 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import PlaylistSplitter from "./PlaylistSplitter";
 import PlaylistCreator from "./PlaylistCreator";
 import Footer from "./Footer";
+import Landing from "./Landing";
+import Privacy from "./Privacy";
 
 export default function Content() {
     const [token, setToken] = useRecoilState(tokenState)
@@ -22,7 +24,9 @@ export default function Content() {
     const location = useLocation();
     const navigate = useNavigate()
 
-    const backgroundColor = location.pathname === "/creator" ? "white" : "";
+    const backgroundColor =
+        location.pathname === "/creator" ? "white" :
+            location.pathname === "/login" ? "#223122" : "";
     // const backgroundColor = location.pathname === "/creator" || location.pathname === "/login" ? "white" : "";
     useEffect(() => {
         if (!token) {
@@ -73,7 +77,7 @@ export default function Content() {
                 <Route path="/splitter/:id" element={<PlaylistSplitter />} />
                 <Route path="/splitter/me" element={<PlaylistSplitter />} />
                 <Route path="/creator/" element={<PlaylistCreator />} />
-
+                <Route path="/privacy" element={<Privacy />} />
             </Routes>
 
         </div>

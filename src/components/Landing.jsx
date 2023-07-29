@@ -2,6 +2,7 @@ import React from 'react'
 import heroImage from '../assets/img/hero-image.png'
 import Login from './Login'
 import { Link } from 'react-router-dom'
+import Footer from './Footer'
 
 
 export default function Landing() {
@@ -16,6 +17,7 @@ export default function Landing() {
                 <Login text="Login with Spotify" class="login-alt" />
             </div>
             <img src={heroImage} className='hero-image'></img>
+
         </div>
     )
 }
