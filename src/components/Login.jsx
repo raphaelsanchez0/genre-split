@@ -77,7 +77,7 @@ export default function Login(props) {
       through Spotify authorization flow.*/}
       {!token ?
         <button
-          className="login"
+          className={props.class}
           onClick={handleLogin}
         >{props.text}</button>
         : <button onClick={handleLogout} className="login">Logout</button>}

@@ -13,6 +13,7 @@ import LoginPage from "./LoginPage"
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import PlaylistSplitter from "./PlaylistSplitter";
 import PlaylistCreator from "./PlaylistCreator";
+import Footer from "./Footer";
 
 export default function Content() {
     const [token, setToken] = useRecoilState(tokenState)
