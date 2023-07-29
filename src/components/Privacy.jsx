@@ -5,14 +5,10 @@ export default function Privacy() {
         <div className='privacy'>
             <h1>Privacy Policy</h1>
             <br />
-            <p>Your privacy is important to us. This Privacy Policy outlines how we collect, use, and safeguard your personal
-                information when you use our website and services. By using our website, you consent to the practices described in this policy.</p>
+            <p>Your privacy is important to us. This Privacy Policy outlines how we collect, use, and safeguard your personalinformation when you use our website and services. By using our website, you consent to the practices described in this policy.</p>
             <br />
             <h2>Information We Collect:</h2>
-
-            <p>We do not collect any personal information from you. Our website is designed to work entirely clientside,
-                meaning that all processes and interactions with Spotify APIs occur directly on your device without involving
-                our servers. We do not store or have access to any data related to your Spotify account, playlists, or music preferences.
+            <p>We do not collect any personal information from you. Our website is designed to work entirely clientside, meaning that all processes and interactions with Spotify APIs occur directly on your device without involving our servers. We do not store or have access to any data related to your Spotify account, playlists, or music preferences.
             </p>
             <br />
             <h2>Spotify API Access:</h2>
