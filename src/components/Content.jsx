@@ -68,6 +68,8 @@ export default function Content() {
 
 
 
+
+
     return (
         <div className="content" style={{ backgroundColor: backgroundColor }}>
 

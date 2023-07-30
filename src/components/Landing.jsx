@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import heroImage from '../assets/img/hero-image.png'
 import Login from './Login'
 import { Link } from 'react-router-dom'
@@ -6,6 +6,11 @@ import Footer from './Footer'
 
 
 export default function Landing() {
+
+    useEffect(() => {
+        console.log("redirect: ", import.meta.env.VITE_REDIRECT_URI)
+    }, [])
+
     return (
         <div className='landing'>
             <div className='text'>
