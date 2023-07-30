@@ -7,9 +7,7 @@ import Footer from './Footer'
 
 export default function Landing() {
 
-    useEffect(() => {
-        console.log("redirect: ", import.meta.env.VITE_REDIRECT_URI)
-    }, [])
+
 
     return (
         <div className='landing'>
