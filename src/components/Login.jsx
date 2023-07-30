@@ -19,6 +19,10 @@ export default function Login(props) {
   const SCOPE = 'playlist-modify-public playlist-read-private user-library-read user-read-private user-read-email playlist-read-collaborative'
 
   useEffect(() => {
+    console.log("redirect: ", import.meta.env.VITE_REDIRECT_URI)
+  }, [])
+
+  useEffect(() => {
     const hash = window.location.hash;
     let newToken = null;
     if (hash) {
