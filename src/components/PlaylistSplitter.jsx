@@ -45,7 +45,6 @@ export default function PlaylistSplitter() {
         }
 
         const tracks = playlistInfo.tracks.items
-        //onlytracks contains the tracks with all of their addtional details
         const onlyTracks = tracks.map(rawTrack => {
             return rawTrack.track
         })
@@ -55,9 +54,9 @@ export default function PlaylistSplitter() {
             const trackObject = new Track(
                 track.name,
                 track.id,
-                track.artists[0].name,
-                (track.artists[0].id).split("/").pop(),
-                track.album.images[0].url)
+                track.artists[0]?.name,
+                (track.artists[0]?.id || "").split("/").pop(),
+                track.album?.images[0]?.url || noImage) // default to `noImage` if no image url is available
 
             formatedTracks.push(trackObject)
         })
