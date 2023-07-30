@@ -22,7 +22,7 @@ export default function CreatedPlaylistMessage({ message: playlist }) { // Destr
         : {};
 
     return isDone ? (
-        <Link to="/go" className='created-playlist-message' style={style}>
+        <Link to="/" className='created-playlist-message' style={style}>
             <h3 >
                 {displayText}
             </h3>
