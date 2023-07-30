@@ -100,27 +100,47 @@ nav {
     margin: 2.5% 20% 2.5% 20%;
     display: flex;
 
+    @include mobile() {
+        margin: 0;
+    }
+
 
     .text {
         display: flex;
         flex-direction: column;
         flex: 1;
 
+        @include mobile() {
+            text-align: center;
+        }
+
         h1 {
             font-size: 100px;
             font-weight: bold;
             color: white;
             padding: 0 0 2vh;
+
+            @include mobile() {
+                font-size: 4.5rem;
+            }
         }
 
         h3 {
             color: $base-color;
             font-size: 30px;
             padding: 0 0 5vh;
+
+            @include mobile() {
+                font-size: 1.5rem;
+            }
         }
 
         .login-alt {
-            @include login-alt()
+            @include login-alt();
+
+            @include mobile() {
+                font-size: 2rem;
+            }
         }
 
         .login-link {
@@ -140,6 +160,10 @@ nav {
 
     .hero-image {
         flex: 1;
+
+        @include mobile() {
+            display: none;
+        }
     }
 
 }
@@ -512,6 +536,11 @@ nav {
 
 .footer {
     width: 60%;
+
+    @include mobile() {
+        width: 90%;
+        margin-top: 5vh;
+    }
 
     .text {
         display: flex;
