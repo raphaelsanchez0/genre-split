@@ -7,7 +7,7 @@ export default function Footer() {
             <hr></hr>
             <div className='text'>
                 <h5>Made by Raphael Sanchez - GenreSplit is not related to
-                    Spotify AB or any of it’s partners in any way</h5>
+                    Spotify AB or any of it’s partners in any way </h5>
                 <h5 className='privacy-policy'><Link to={"/privacy"}
                     style={{ textDecoration: 'none', color: 'white' }}
                 >Privacy Policy</Link>
