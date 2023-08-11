@@ -27,7 +27,7 @@ export default function Privacy() {
             <p>We may update this Privacy Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will notify you of any material changes by posting the updated policy on our website. Your continued use of our website after the posting of any changes constitutes your acceptance of such changes.</p>
             <br />
             <h2>Contact Us:</h2>
-            <p>If you have any questions or concerns about this Privacy Policy or our practices, please contact us at [your email address].</p>
+            <p>If you have any questions or concerns about this Privacy Policy or our practices, please contact us at anroraphael@hotmail.com.</p>
             <br />
             <p>By using our website, you acknowledge that you have read and understood this Privacy Policy and agree to its terms. Thank you for using our service and trusting us with your data privacy.</p>
 
