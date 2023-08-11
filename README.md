@@ -6,6 +6,10 @@ Organizes large, unsorted Spotify playlists by genre (including liked songs). Us
 
 ## Split any playlist
 
+Choose any playlist in your library or select your liked songs
+
+![playlists](https://raw.githubusercontent.com/raphaelsanchez0/genre-split/master/imgs/your-playlists.png)
+
 Select your preferred genres from a playlist, then generate new playlists featuring your chosen genres.
 
 ![splitter](https://raw.githubusercontent.com/raphaelsanchez0/genre-split/master/imgs/splitter1.png)
