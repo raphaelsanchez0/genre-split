@@ -1,4 +1,8 @@
-
+/**
+ * Shows information about the playlist, including the name, 
+ * picture, number of tracks. Has a button for the user to select
+ * it for splitting.
+ */
 import shuffle from '../assets/img/shuffle.svg'
 import musicNote from '../assets/img/music-note.png'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'

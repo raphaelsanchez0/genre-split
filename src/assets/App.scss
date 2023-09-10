@@ -192,16 +192,26 @@ nav {
     height: 80vh;
 
     .playlist-header {
-        text-align: center;
-
-
-
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .your-playlists{
+            text-align: center;
+        }
         .header {
             display: flex;
             flex-direction: row;
         }
+        .spotify-logo{
+            height:2rem;
+            
+        }
 
         padding: 2%;
+
+        
+        
     }
 
 
