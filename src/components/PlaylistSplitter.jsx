@@ -13,6 +13,7 @@ import GenrePlaylistButton from "./GenrePlaylistButton";
 import { Link, Route, Routes, useLocation, useParams } from "react-router-dom";
 import noImage from "../assets/img/no-image.svg";
 import heart from "../assets/img/heart.png";
+import spotifyLogo from "../assets/img/spotify-logo.png";
 
 export default function PlaylistSplitter() {
   const [token, setToken] = useRecoilState(tokenState);
@@ -263,6 +264,7 @@ export default function PlaylistSplitter() {
             ) : (
               <></>
             )}
+            <img src={spotifyLogo} className="spotify-logo" />
           </div>
         </div>
       ) : (
