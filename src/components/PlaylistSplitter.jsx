@@ -14,7 +14,7 @@ import { Link, Route, Routes, useLocation, useParams } from "react-router-dom";
 import noImage from "../assets/img/no-image.svg";
 import heart from "../assets/img/heart.png";
 import spotifyLogo from "../assets/img/spotify-logo.png";
-import PlayOnSpotify from "./PlayOnSpotify";
+import OpenSpotify from "./OpenSpotify";
 
 export default function PlaylistSplitter() {
   const [token, setToken] = useRecoilState(tokenState);
@@ -264,7 +264,7 @@ export default function PlaylistSplitter() {
             ) : (
               <></>
             )}
-            <PlayOnSpotify link={playlistInfo.external_urls.spotify} />
+            <OpenSpotify link={playlistInfo.external_urls.spotify} />
 
           </div>
         </div>

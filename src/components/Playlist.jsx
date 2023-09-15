@@ -6,7 +6,7 @@
 import shuffle from "../assets/img/shuffle.svg";
 import musicNote from "../assets/img/music-note.png";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
-import PlayOnSpotify from "./PlayOnSpotify";
+import PlayOnSpotify from "./OpenSpotify";
 
 export default function Playlist(props) {
   const location = useLocation();
