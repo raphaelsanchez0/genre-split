@@ -27,8 +27,8 @@ export default function Content() {
     location.pathname === "/creator"
       ? "white"
       : location.pathname === "/login"
-      ? "#223122"
-      : "";
+        ? "#223122"
+        : "";
   // const backgroundColor = location.pathname === "/creator" || location.pathname === "/login" ? "white" : "";
   useEffect(() => {
     if (!token) {
@@ -56,7 +56,7 @@ export default function Content() {
   }, [token]);
 
   const playlists = userPlaylists.map((playlist) => {
-    console.log(playlist);
+
     const coverImage = playlist.images[0] ? playlist.images[0].url : noImage;
     return (
       <Playlist
@@ -64,7 +64,7 @@ export default function Content() {
         coverImage={coverImage}
         title={playlist.name}
         numOfTracks={playlist.tracks.total}
-        link={playlist.href}
+        link={playlist.external_urls.spotify}
       />
     );
   });

@@ -20,13 +20,17 @@ export default function Playlist(props) {
       </div>
     ) : null;
 
+
   return (
     <div className="playlist">
       <img src={props.coverImage} className="cover-image" />
       <div className="text">
         <h2 className="playlist-name">{props.title}</h2>
         {renderSongsStat}
-        <PlayOnSpotify link={props.link}/>
+        {props.link ?
+          <PlayOnSpotify link={props.link} />
+          : null}
+
       </div>
       {!isInSplitter ? (
         <Link to={`splitter/${props.id}`} className="shuffle-btn">
@@ -37,7 +41,7 @@ export default function Playlist(props) {
       ) : (
         <></>
       )}
-      
+
     </div>
   );
 }

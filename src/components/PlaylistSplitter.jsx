@@ -14,6 +14,7 @@ import { Link, Route, Routes, useLocation, useParams } from "react-router-dom";
 import noImage from "../assets/img/no-image.svg";
 import heart from "../assets/img/heart.png";
 import spotifyLogo from "../assets/img/spotify-logo.png";
+import PlayOnSpotify from "./PlayOnSpotify";
 
 export default function PlaylistSplitter() {
   const [token, setToken] = useRecoilState(tokenState);
@@ -25,7 +26,7 @@ export default function PlaylistSplitter() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAnySelected, setIsAnySelected] = useState(false);
 
-  const [splittingLikedSongs, setSplittingLikedSongs] = useState(false);
+
 
   const location = useLocation();
 
@@ -171,6 +172,7 @@ export default function PlaylistSplitter() {
       }
     };
 
+
     if (token) {
       fetchData();
     }
@@ -199,13 +201,11 @@ export default function PlaylistSplitter() {
       );
 
       setGenresWithTracks(genresWithTracks);
-      console.log(genresWithTracks);
       setIsLoading(false);
     };
 
     if (Object.keys(playlistInfo).length !== 0) {
       manipulateData();
-      console.log("manipulation complete");
     }
   }, [playlistInfo]);
 
@@ -259,12 +259,13 @@ export default function PlaylistSplitter() {
           <div className="text-stats">
             <h1 className="name">{playlistInfo.name}</h1>
             {playlistInfo.followers?.total !== undefined &&
-            playlistInfo.followers.total > 0 ? (
+              playlistInfo.followers.total > 0 ? (
               <h3 className="followers">{`${playlistInfo.followers.total} likes`}</h3>
             ) : (
               <></>
             )}
-            <img src={spotifyLogo} className="spotify-logo" />
+            <PlayOnSpotify link={playlistInfo.external_urls.spotify} />
+
           </div>
         </div>
       ) : (

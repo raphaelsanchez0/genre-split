@@ -357,6 +357,11 @@ nav {
         }
 
         .play-on-spotify {
+            p {
+                font-weight: 600;
+                font-size: 0.9rem;
+            }
+
             background: black;
             color: white;
             border-radius: 50px;
@@ -365,6 +370,8 @@ nav {
             justify-content: center;
             align-items: center;
             width: 12.5em;
+            text-decoration: none;
+
 
             img {
                 height: 1.5rem;
@@ -470,6 +477,29 @@ nav {
         align-items: flex-start;
         padding: 1%;
 
+        .play-on-spotify {
+            p {
+                font-weight: 600;
+                font-size: 0.9rem;
+            }
+
+            background: black;
+            color: white;
+            border-radius: 50px;
+            padding: 0.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 12.5em;
+            text-decoration: none;
+
+
+            img {
+                height: 1.5rem;
+                margin-left: .5em;
+            }
+        }
+
         .name {
             text-align: left;
             font-size: 56px;
@@ -512,6 +542,8 @@ nav {
             flex-direction: column-reverse;
 
         }
+
+
 
         .genre-playlists-buttons {
             flex: 3;

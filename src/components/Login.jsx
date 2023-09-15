@@ -1,3 +1,8 @@
+/**
+ * Is the actual login button, in addition to handling
+ * the login functions
+ */
+
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useRecoilState } from 'recoil'
