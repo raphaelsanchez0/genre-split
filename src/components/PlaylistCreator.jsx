@@ -87,7 +87,7 @@ export default function PlaylistCreator() {
   }, [finishedCreating]);
 
   const createdPlaylistMessages = createdPlaylists.map((playlist) => {
-    return <CreatedPlaylistMessage message={playlist.name} />;
+    return <CreatedPlaylistMessage message={playlist.name} link={playlist.url} />;
   });
 
   return (
