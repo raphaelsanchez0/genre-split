@@ -28,6 +28,7 @@ export default function PlaylistCreator() {
   const [currentPlaylistId, setCurrentPlaylistId] = useState("");
 
   const [createdPlaylists, setCreatedPlaylists] = useState([]);
+  const [createdPlaylistsURLs, setCreatedPlaylistsURLs] = useState([]);
   const [mappingCount, setMappingCount] = useState(0);
 
   const [finishedCreating, setFinishedCreating] = useState(false);
@@ -47,13 +48,17 @@ export default function PlaylistCreator() {
               );
               // creates a new playlist for the genre
               const playlistId = playlistData.id;
+              const playlistURL = playlistData.external_urls.spotify;
               const tracksInGenre = genre[2];
               const URIs = createArrayOfFormatedSpotifyURIs(tracksInGenre);
               // get all the ids from genre[2]
               const response = await addToPlaylist(token, playlistId, URIs);
               setCreatedPlaylists((prevPlaylists) => [
-                genre[0],
-                ...prevPlaylists,
+                {
+                  name: genre[0],
+                  url: playlistURL,
+                },
+                ...prevPlaylists
               ]);
             } catch (err) {
               console.error(err);
@@ -73,12 +78,16 @@ export default function PlaylistCreator() {
 
   useEffect(() => {
     if (finishedCreating) {
-      setCreatedPlaylists((prevPlaylists) => ["Done", ...prevPlaylists]);
+      setCreatedPlaylists((prevPlaylists) => [
+
+        { name: "Done", url: "" },
+        ...prevPlaylists
+      ]);
     }
   }, [finishedCreating]);
 
-  const createdPlaylistMessages = createdPlaylists.map((playlistName) => {
-    return <CreatedPlaylistMessage message={playlistName} />;
+  const createdPlaylistMessages = createdPlaylists.map((playlist) => {
+    return <CreatedPlaylistMessage message={playlist.name} />;
   });
 
   return (
