@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import OpenSpotify from "./OpenSpotify";
 
-export default function CreatedPlaylistMessage({ message: playlist }) { // Destructuring props for cleaner syntax
+export default function CreatedPlaylistMessage({ message: playlist, link }) { // Destructuring props for cleaner syntax
 
     const [isDone, setIsDone] = useState(false);
 
@@ -30,6 +31,7 @@ export default function CreatedPlaylistMessage({ message: playlist }) { // Destr
     ) : (
         <h3 className='created-playlist-message' style={style}>
             {displayText}
+            <OpenSpotify link={link} />
         </h3>
     );
 }
