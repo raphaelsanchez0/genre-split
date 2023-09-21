@@ -31,7 +31,7 @@ export default function CreatedPlaylistMessage({ message: playlist, link }) { //
     ) : (
         <h3 className='created-playlist-message' style={style}>
             {displayText}
-            <OpenSpotify link={link} />
+            <OpenSpotify className="play-on-spotify" link={link} />
         </h3>
     );
 }

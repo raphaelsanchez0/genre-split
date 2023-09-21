@@ -93,7 +93,7 @@ export default function PlaylistCreator() {
   return (
     <div className="playlist-creator">
       <div className="created-playlist-messages">{createdPlaylistMessages}</div>
-      <img className="spotify-logo" src={spotifyLogo}></img>
+
     </div>
   );
 }

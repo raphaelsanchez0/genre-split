@@ -257,10 +257,11 @@ nav {
         }
 
         @include mobile() {
-            height: 17vh;
+            // height: 17vh;
             justify-content: space-between;
             margin: 2px 0;
             border-radius: 0;
+
         }
 
 
@@ -268,6 +269,10 @@ nav {
         .playlist-name {
             @include desktop() {
                 font-size: 15px;
+            }
+
+            @include mobile() {
+                font-size: 1.2em;
             }
 
 
@@ -285,7 +290,8 @@ nav {
 
             @include mobile() {
                 flex: 1;
-                max-width: 10vh;
+                max-width: 15vh;
+
             }
 
         }
@@ -305,6 +311,14 @@ nav {
             justify-content: center;
             margin: 10px;
 
+            .songs-stat {
+                .music-note {
+                    @include mobile() {
+                        display: none;
+                    }
+                }
+            }
+
             .playlist-name .songs-stat {
                 display: flex;
 
@@ -320,6 +334,8 @@ nav {
 
                 .music-note {
                     height: 15px;
+
+
                 }
             }
         }
@@ -372,6 +388,10 @@ nav {
             width: 12.5em;
             text-decoration: none;
 
+            @include mobile() {
+                width: 90%;
+            }
+
 
             img {
                 height: 1.5rem;
@@ -386,7 +406,7 @@ nav {
         display: grid;
         grid-template-columns: 1fr;
         gap: 10px;
-
+        margin: 2%;
         display: grid;
         justify-items: center;
         /* for horizontal alignment */
@@ -398,16 +418,44 @@ nav {
 
 
         .created-playlist-message {
+
+
             background: rgb(183, 183, 183);
             // margin: 10px 10px 10px 10px;
             text-align: center;
             width: 25%;
             border-radius: 25px;
-            padding: 5px;
+            padding: .25em;
 
             @include mobile() {
                 width: 90%;
             }
+
+
+            .play-on-spotify {
+                p {
+                    font-weight: 600;
+                    font-size: 0.9rem;
+                }
+
+                background: black;
+                color: white;
+                border-radius: 50px;
+                padding: 0.5rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 1rem;
+                width: 90%;
+                text-decoration: none;
+
+
+                img {
+                    height: 1.5rem;
+                    margin-left: .5em;
+                }
+            }
+
         }
 
 
@@ -444,6 +492,8 @@ nav {
     .playlist-creator {
         display: flex;
         flex-direction: column;
+
+        .created-playlist-message {}
 
 
         .spotify-logo {
@@ -492,6 +542,7 @@ nav {
             align-items: center;
             width: 12.5em;
             text-decoration: none;
+
 
 
             img {
