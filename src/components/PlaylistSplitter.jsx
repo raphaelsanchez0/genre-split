@@ -25,7 +25,7 @@ export default function PlaylistSplitter() {
   );
   const [isLoading, setIsLoading] = useState(true);
   const [isAnySelected, setIsAnySelected] = useState(false);
-
+  const [isSplittingLikedSongs, setIsSplittingLikedSongs] = useState(false);
 
 
   const location = useLocation();
@@ -143,6 +143,9 @@ export default function PlaylistSplitter() {
     const fetchData = async () => {
       let playlistData;
       if (location.pathname === "/splitter/me") {
+        setIsSplittingLikedSongs(true);
+      }
+      if (setIsSplittingLikedSongs) {
         //if accessing liked songs
         getLikedTracks(token)
           .then((response) => {
@@ -264,7 +267,12 @@ export default function PlaylistSplitter() {
             ) : (
               <></>
             )}
-            <OpenSpotify link={playlistInfo.external_urls.spotify} />
+            {!isSplittingLikedSongs ?
+              <OpenSpotify link={playlistInfo.external_urls.spotify} />
+              :
+              null
+            }
+
 
           </div>
         </div>

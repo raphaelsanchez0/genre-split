@@ -257,10 +257,10 @@ nav {
         }
 
         @include mobile() {
-            // height: 17vh;
             justify-content: space-between;
             margin: 2px 0;
             border-radius: 0;
+            overflow: hidden;
 
         }
 
@@ -300,6 +300,15 @@ nav {
         .text {
             @include mobile() {
                 flex: 2;
+
+                .playlist-name {
+                    font-weight: 700;
+
+                }
+
+                h3 {
+                    font-weight: 300;
+                }
             }
 
             @include tablet() {
@@ -318,6 +327,7 @@ nav {
                     }
                 }
             }
+
 
             .playlist-name .songs-stat {
                 display: flex;
@@ -375,7 +385,7 @@ nav {
         .play-on-spotify {
             p {
                 font-weight: 600;
-                font-size: 0.9rem;
+                font-size: 0.8rem;
             }
 
             background: black;
@@ -588,6 +598,7 @@ nav {
         display: flex;
         flex-direction: row;
         gap: 20px;
+        color: black;
 
         @include mobile() {
             flex-direction: column-reverse;
