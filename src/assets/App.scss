@@ -661,6 +661,7 @@ nav {
                 background-color: $base-color;
                 border-radius: 7.5px;
                 font-weight: bold;
+                color: black;
 
                 @include mobile() {
                     width: 100%;
