@@ -145,7 +145,7 @@ export default function PlaylistSplitter() {
       if (location.pathname === "/splitter/me") {
         setIsSplittingLikedSongs(true);
       }
-      if (setIsSplittingLikedSongs) {
+      if (isSplittingLikedSongs) {
         //if accessing liked songs
         getLikedTracks(token)
           .then((response) => {
