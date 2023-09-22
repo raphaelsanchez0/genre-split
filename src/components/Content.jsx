@@ -9,7 +9,7 @@ import noImage from "../assets/img/no-image.svg";
 import Playlist from "./Playlist";
 import Playlists from "./Playlists";
 import LoginPage from "./LoginPage";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate, Navigate } from "react-router-dom";
 import PlaylistSplitter from "./PlaylistSplitter";
 import PlaylistCreator from "./PlaylistCreator";
 import Footer from "./Footer";
@@ -78,6 +78,8 @@ export default function Content() {
         <Route path="/splitter/me" element={<PlaylistSplitter />} />
         <Route path="/creator/" element={<PlaylistCreator />} />
         <Route path="/privacy" element={<Privacy />} />
+        {/*Catch-all */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
   );
