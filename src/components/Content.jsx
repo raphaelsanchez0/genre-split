@@ -79,7 +79,7 @@ export default function Content() {
         <Route path="/creator/" element={<PlaylistCreator />} />
         <Route path="/privacy" element={<Privacy />} />
         {/*Catch-all */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
   );
