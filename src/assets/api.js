@@ -130,32 +130,14 @@ export async function addToPlaylist(token, playlistId, uris) {
   const url = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`
   const headers = {
     'Authorization': `Bearer ${token}`
-  };
-
-  // Chunk the uris array into chunks of 100 or less
-  const chunkedUris = chunkArray(uris, 100);
-
-  for (let i = 0; i < chunkedUris.length; i++) {
-    const requestBody = { 'uris': chunkedUris[i] };
-    try {
-      const response = await axios.post(url, requestBody, { headers });
-      // You can either return the response.data here or collect them and return later
-      // For simplicity, I'm ignoring the response here
-    } catch (err) {
-      console.error(err);
-      // Depending on how you want to handle errors, you can either throw here or continue
-      // I'm continuing here to try adding the remaining chunks
-    }
   }
-}
-
-// Utility function to chunk an array
-function chunkArray(array, chunkSize) {
-  const results = [];
-  while (array.length) {
-    results.push(array.splice(0, chunkSize));
+  const requestBody = { 'uris': uris }
+  try {
+    const response = await axios.post(url, requestBody, { headers })
+    return response.data
+  } catch (err) {
+    console.error(err)
   }
-  return results;
 }
 
 export function convertToSpotifyURI(trackId) {

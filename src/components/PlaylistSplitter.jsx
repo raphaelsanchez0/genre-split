@@ -142,10 +142,10 @@ export default function PlaylistSplitter() {
   useEffect(() => {
     const fetchData = async () => {
       let playlistData;
-      let splittingLikedSongs = location.pathname === "/splitter/me";
-      if (splittingLikedSongs) {
-        setIsSplittingLikedSongs(true)
-        console.log("i am being split!")
+      if (location.pathname === "/splitter/me") {
+        setIsSplittingLikedSongs(true);
+      }
+      if (isSplittingLikedSongs) {
         //if accessing liked songs
         getLikedTracks(token)
           .then((response) => {
@@ -163,7 +163,6 @@ export default function PlaylistSplitter() {
             console.error("Error getting liked tracks:", error);
           });
       } else {
-        console.log("found error")
         getPlaylistInfo(token, id)
           .then((response) => {
             playlistData = response;
